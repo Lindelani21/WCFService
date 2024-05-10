@@ -11,7 +11,8 @@ using System.Text;
 public interface IService
 {
 
-	
+    [OperationContract]
+    DemoTable get(int var1, int var2);
 	
 }
 
