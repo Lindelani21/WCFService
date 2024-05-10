@@ -18,4 +18,6 @@ public class Service : IService
     {
         throw new NotImplementedException();
     }
+
+    //The functions ar push pull and fetch
 }

@@ -13,6 +13,8 @@ public interface IService
 
     [OperationContract]
     DemoTable get(int var1, int var2);
+
+    // I am missing a database , so I am just going to be practicing how these functions work
 	
 }
 
