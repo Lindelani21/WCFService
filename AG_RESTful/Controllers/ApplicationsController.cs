@@ -41,6 +41,20 @@ namespace AG_RESTful.Controllers
             return application;
         }
 
+
+        [HttpGet("student={id}")]
+        public ActionResult<Application> GetApplicationByStudent(int id)
+        {
+            var application = _context.Application.Where(app => app.Id == id).FirstOrDefault();
+
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+            return application;
+        }
+
         // PUT: api/Applications/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

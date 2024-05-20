@@ -11,7 +11,8 @@ namespace AG_webD2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (RESTfulClient.Instance == null)
+                RESTfulClient.InitializeClent("https://localhost:7077/api/");
         }
     }
 }
