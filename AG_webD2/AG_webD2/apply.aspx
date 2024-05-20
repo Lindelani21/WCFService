@@ -1,11 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="apply.aspx.cs" Inherits="AG_webD2.apply" %>
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head runat="server">
-    <title>Apply</title>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="apply.aspx.cs" Inherits="AG_webD2.apply" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+        <title>Apply</title>
      <style>
     body {
         font-family: Arial, sans-serif;
@@ -51,9 +46,9 @@
         font-size: 24px; margin-bottom: 20px;
     }
 </style>
-</head>
-<body>
-     <div class="container">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+         <div class="container">
     <form id="form1" runat="server">
         
              <h1 runat="server" id="heading">Apply</h1> 
@@ -104,5 +99,4 @@ Preffered Module:
     </form>
          </div>
    
-</body>
-</html>
+</asp:Content>

@@ -1,9 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="AG_webD2.login" %>
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master" CodeBehind="login.aspx.cs" Inherits="AG_webD2.login" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Login Page</title>
     <style>
         body {
@@ -48,18 +44,18 @@
             text-align: center; margin-top: 10px;
         }
     </style>
-</head>
-<body>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
-         <h1>Login</h1>
-        <form action="login.aspx" method="post" runat="server" id="formId" >
-            <input type="text" name="username" placeholder="Username" required id="name" runat="server">
-            <input type="password" name="password" placeholder="Password" required id="password" runat="server">
-            <div class="signup-link">
-            <asp:Button runat="server" ID="btnLogin"  OnClick="btnLogin_Clicked" text="Login" ></asp:Button>
-            <p>Not registered yet? <a href="registration.aspx">Sign up here</a></p> 
-        </div>
-        </form>     
+     <h1>Login</h1>
+   
+        <input type="text" name="username" placeholder="Username" required id="name" runat="server">
+        <input type="password" name="password" placeholder="Password" required id="password" runat="server">
+        <div class="signup-link">
+        <asp:Button runat="server" ID="btnLogin"  OnClick="btnLogin_Clicked" text="Login" ></asp:Button>
+        <p>Not registered yet? <a href="registration.aspx">Sign up here</a></p> 
     </div>
-</body>
-</html>
+  
+</div>
+</asp:Content>
+
