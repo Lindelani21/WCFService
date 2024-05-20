@@ -53,13 +53,23 @@
     <div class="container">
     <h1>Profile</h1>
     
+        <span>Student Number:</span>
         <input type="text" readonly name="studentNum" placeholder="Student number" required id="studentNum" runat="server">
+        </br>
         <asp:Button runat="server" ID="btnEdit" Text="Edit" OnClick="btnEdit_clicked"></asp:Button>
         <asp:Button runat="server" ID="btnDelete" Text="Delete" OnClick="btnDelete_clicked"></asp:Button>
+        <span>Name:</span>
         <input type="text" name="name" placeholder="Name" required id="name" runat="server">
+        </br>
+        <span>Surname:</span>
         <input type="text" name="surname" placeholder="Surname"  required id="surname" runat="server">
+        </br>
+        <span>Username:</span>
         <input type="text" name="username" required id="username" placeholder="Username" runat="server">
+        </br>
+        <span>Password</span>
         <input type="password" name="password" placeholder="Password" required id="password" runat="server">
+        </br>
         <asp:Button runat="server" ID="btnSave" Text="Save" OnClick="btnSave_clicked"></asp:Button>
        
 

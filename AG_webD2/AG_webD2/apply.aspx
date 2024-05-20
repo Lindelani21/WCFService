@@ -49,7 +49,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
          <div class="container">
-    <form id="form1" runat="server">
+   
         
              <h1 runat="server" id="heading">Apply</h1> 
  <input type="text" name="studentNum" readonly placeholder="Student number" required id="studentNum" runat="server">
@@ -96,7 +96,7 @@ Preffered Module:
      <asp:Button runat="server" ID="send"  OnClick="btnSend_Clicked" text="Send Contract" ></asp:Button>
  
       
-    </form>
+  
          </div>
    
 </asp:Content>

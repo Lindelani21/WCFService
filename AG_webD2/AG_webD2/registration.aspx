@@ -52,11 +52,22 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <div class="container">
      <h1>Register</h1>
-         <input type="text" name="studentNum" placeholder="Student number" required id="studentNum" runat="server">
-         <input type="text" name="name" placeholder="Name" required id="name" runat="server">
-         <input type="text" name="surname" placeholder="Surname" required id="surname" runat="server">
-         <input type="text" name="username" placeholder="Username" required id="username" runat="server">
-         <input type="password" name="password" placeholder="Password" required id="password" runat="server">
+
+         <span>Student Number:</span>
+         <input type="text" name="studentNum" placeholder="Student number" required id="studentNum" runat="server"/>
+         </br>
+         <span>Name:</span>
+         <input type="text" name="name" placeholder="Name" required id="name" runat="server"/>
+         </br>
+         <span>Surname:</span>
+         <input type="text" name="surname" placeholder="Surname" required id="surname" runat="server"/>
+         </br>
+         <span>Username:</span>
+         <input type="text" name="username" placeholder="Username" required id="username" runat="server"/>
+         </br>
+         <span>Password:</span>
+         <input type="password" name="password" placeholder="Password" required id="password" runat="server"/>
+         </br>
          <asp:Button runat="server" ID="btnRegister" Text="Register" OnClick="btnRegister_clicked"></asp:Button>
  </div>
 </asp:Content>

@@ -49,12 +49,16 @@
     <div class="container">
      <h1>Login</h1>
    
+        <span>Username:</span>
         <input type="text" name="username" placeholder="Username" required id="name" runat="server">
+        </br>
+        <span>Password:</span>
         <input type="password" name="password" placeholder="Password" required id="password" runat="server">
+        </br>
         <div class="signup-link">
         <asp:Button runat="server" ID="btnLogin"  OnClick="btnLogin_Clicked" text="Login" ></asp:Button>
         <p>Not registered yet? <a href="registration.aspx">Sign up here</a></p> 
-    </div>
+        </div>
   
 </div>
 </asp:Content>
