@@ -1,0 +1,142 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="AG_webD2.Site" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title></title>
+         <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+.container {
+    width: 97%; 
+max-width: 80%;
+    margin: 0 auto; padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative; top: 50px;
+             left: 0px;
+         }
+
+.nav_container { 
+    width: 90%;
+    max-width: 80%;
+    margin: 0 auto; padding: 5px 20px;
+    background-color: #ffffff;
+    border-radius: 5px 5px 0px 0px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: end;
+    position: relative; top: 50px;
+             left: 0px;
+         }
+
+.container img {
+    width: 100px; height: 100px;
+    margin-bottom: 20px;
+}
+
+.application,
+.nav,
+.container input[type="text"],
+.container input[type="password"],
+.container input[type="email"] {
+    width: 100%; padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.application,
+.nav
+.container input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;  border-radius: 3px;
+    border: none; padding: 10px 20px;
+    cursor: pointer;
+}
+
+.application,
+.nav,
+.container input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.application,
+heading,
+.nav
+{
+    text-decoration: none;
+    display: inline-block;
+    width: max-content;
+}
+
+.nav{
+    margin-block-end: 0px;
+    margin-block-start:auto;
+    margin-inline-start: 10px;
+    color: aliceblue;
+}
+
+.heading{
+    width: 100%;
+    color: black;
+    text-decoration: none;
+}
+
+.container h1 {
+    font-size: 24px; margin-bottom: 20px;
+}
+
+a. {
+ background-color: #007bff;
+ color: white; 
+}
+         </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+
+        <h1 style="text-align:center; color:white; width: 100%;">
+			<a class="heading" href="home.aspx" >Assistant Genesis</a>
+		</h1>
+
+		<div class="nav_container" id="NotLoggedin" hidden runat="server">
+                <a class="nav" href="login.aspx">Log In</a>
+                <a class="nav" href="registration.aspx">Register</a>
+		</div>
+
+		<div class="nav_container" id="StudentLoggedin" hidden runat="server">
+                <a class="nav" href="apply.aspx">Application</a>
+                <a class="nav" href="profile.aspx">Profile</a>
+		</div>
+
+		<div class="nav_container" id="LecturerLoggedin" hidden runat="server">
+                <a class="nav" href="applications.aspx">Applications</a>
+                <a class="nav" href="profile.aspx">Profile</a>
+		</div>
+    
+    <form id="form1" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+
+    <!--Footer-->
+    <footer class="container">
+            <p> assistant@gen.co.za </p>
+            <p> 011 675 5436 </p>
+            <p> Assistant Genesis </p>
+     </footer>
+    <!--End of Footer-->
+
+
+</body>
+</html>

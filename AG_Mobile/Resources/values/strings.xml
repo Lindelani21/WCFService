@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Assistant Genesis</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+	<string name="base_url">https://10.0.2.2:7077/api/</string>
+</resources>

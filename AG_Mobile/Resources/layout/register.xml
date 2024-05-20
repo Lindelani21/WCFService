@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registerContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:id="@+id/form">
+
+        <GridLayout
+       android:minWidth="25px"
+       android:minHeight="25px"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:id="@+id/gridLayout1">
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblName"
+                android:text="Name"
+                android:layout_row="0"
+                android:layout_column="0"/>
+
+            <AutoCompleteTextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtName"
+                android:layout_row="0"
+                android:layout_column="1"/>
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblSurname"
+                android:text="Surname"
+                android:layout_row="1"
+                android:layout_column="0"/>
+
+            <AutoCompleteTextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtSurname"
+                android:layout_row="1"
+                android:layout_column="1"/>
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblStudentNo"
+                android:text="Student No"
+                android:layout_row="2"
+                android:layout_column="0"/>
+
+            <AutoCompleteTextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtStudentNo"
+                android:layout_row="2"
+                android:layout_column="1"/>
+                
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblUsername"
+                android:text="Username"
+                android:layout_row="3"
+                android:layout_column="0"/>
+
+            <AutoCompleteTextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtUsername"
+                android:layout_row="3"
+                android:layout_column="1"/>
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblPassword"
+                android:text="Password"
+                android:layout_row="4"
+                android:layout_column="0"/>
+
+            <AutoCompleteTextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtPassword"
+                android:password="true"
+                android:layout_row="4"
+                android:layout_column="1"/>
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblPasswordC"
+                android:text="Confirm Password"
+                android:layout_row="5"
+                android:layout_column="0"/>
+
+            <AutoCompleteTextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtPasswordC"
+                android:password="true"
+                android:layout_row="5"
+                android:layout_column="1"/>
+        </GridLayout>
+
+        <Button
+        android:id="@+id/btnRegister"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Register"/>
+
+    </LinearLayout>
+</RelativeLayout>
