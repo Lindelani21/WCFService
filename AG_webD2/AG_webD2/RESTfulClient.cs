@@ -155,7 +155,7 @@ namespace AG_webD2
 
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.Created)
                 {
                     message = "API call was successful";
 
