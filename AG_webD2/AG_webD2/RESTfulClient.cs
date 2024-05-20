@@ -112,7 +112,46 @@ namespace AG_webD2
                 // Write to request body
                 Stream stream = request.GetRequestStream();
                 stream.Write(bytes, 0, bytes.Length);
-                //stream.Close();
+                stream.Close();
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                if (response.StatusCode == HttpStatusCode.Created)
+                {
+                    message = "API call was successful";
+
+                    return true;
+                }
+                else
+                {
+                    message = ("API call failed. Response code: " + response.StatusCode);
+                }
+            }
+            catch (WebException ex)
+            {
+                message = ($"Connection failed: {ex.Message}");
+                return false;
+            }
+
+            return false;
+        }
+
+        public bool PUT<T>(string directive, T data)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"{baseURL}{directive}");
+            request.Method = "PUT";
+            request.ContentType = "application/json";
+
+            string jsonObj = JsonConvert.SerializeObject(data);
+
+            byte[] bytes = Encoding.UTF8.GetBytes(jsonObj);
+
+            try
+            {
+                // Write to request body
+                Stream stream = request.GetRequestStream();
+                stream.Write(bytes, 0, bytes.Length);
+                stream.Close();
 
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
