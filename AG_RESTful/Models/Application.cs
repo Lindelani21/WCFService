@@ -2,7 +2,7 @@
 {
     public class Application
     {
-        public int? ApplicationId { get; set; }
+        public int ApplicationId { get; set; }
 
         public string? Role { get; set; }
 
