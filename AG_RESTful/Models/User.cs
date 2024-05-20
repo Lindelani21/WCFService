@@ -4,7 +4,7 @@ namespace AG_RESTful.Models
 {
     public partial class User
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public string? StudentNum { get; set; }
 
