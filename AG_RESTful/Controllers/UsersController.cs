@@ -91,6 +91,9 @@ namespace AG_RESTful.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            if (user.Id == 0)
+                user.Id = null;
+
             _context.User.Add(user);
             await _context.SaveChangesAsync();
 

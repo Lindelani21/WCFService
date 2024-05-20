@@ -94,7 +94,7 @@ namespace AG_RESTful.Controllers
             _context.Application.Add(application);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetApplication", new { id = application.Id }, application);
+            return CreatedAtAction("GetApplication", new { Id = application.ApplicationId }, application);
         }
 
         // DELETE: api/Applications/5
