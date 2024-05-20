@@ -12,7 +12,9 @@ namespace AG_webD2
 {
     public partial class apply : System.Web.UI.Page
     {
-        ServiceClient client = new ServiceClient();
+        //ServiceClient client = new ServiceClient();
+        RESTfulClient client = RESTfulClient.Instance;
+
         string rootDir = ".\\Files\\";
 
         protected void Page_Load(object sender, EventArgs e)
@@ -31,7 +33,7 @@ namespace AG_webD2
 
                     send.Attributes["hidden"] = "true";
 
-                    Application application = client.GetApplication(user.Id);
+                    Application application = client.GET<Application>($"Applications/student={user.Id}");//client.GetApplication(user.Id);
                     if (application != null)
                     {
                         heading.InnerHtml = "Application";
@@ -50,13 +52,13 @@ namespace AG_webD2
 
                             documents.InnerHtml = "<h1>Uploaded Documents</h1>" + application.Transcript.Split('\\').Last();
 
-                            Document signed = client.GetDocumentByUser(user.Id, "signed");
+                            Document signed = client.GET<Document>($"Documents/user={user.Id}&type={"signed"}"); // client.GetDocumentByUser(user.Id, "signed");
                             if (signed != null)
                                 documents.InnerHtml += $"<br/> {signed.Path.Split('\\').Last()}";
 
                             // Contract stuff
-                            Document contract= client.GetDocumentByUser(user.Id, "contract");
-                        if (contract == null)
+                            Document contract= client.GET<Document>($"Documents/user={user.Id}&type={"contract"}"); //client.GetDocumentByUser(user.Id, "contract");
+                            if (contract == null)
                         {
                                 download.Attributes["hidden"] = "true";
                                 upload.Attributes["hidden"] = "true";
@@ -78,9 +80,9 @@ namespace AG_webD2
                         Response.Redirect("applications.aspx");
 
                     int studentID = int.Parse(Request.QueryString["studentID"]);
-                    Application application = client.GetApplication(studentID);
+                    Application application = client.GET<Application>($"Applications/student={studentID}");//client.GetApplication(studentID);
 
-                    User applicant = client.GetUser(int.Parse(Request.QueryString["studentID"]));
+                    User applicant = client.GET<User>($"Users/{studentID}"); // client.GetUser(int.Parse(Request.QueryString["studentID"]));
                     string initials = "";
 
                     foreach (string initial in user.Name.Split(' '))
@@ -97,7 +99,7 @@ namespace AG_webD2
                         btnApply.Attributes["hidden"] = "true";
                         updateStatus.Attributes.Remove("hidden");
 
-                        Document signed = client.GetDocumentByUser(applicant.Id, "signed");
+                        Document signed = client.GET<Document>($"Documents/user={applicant.Id}&type={"signed"}"); //client.GetDocumentByUser(applicant.Id, "signed");
                         if (signed != null)
                             documents.InnerHtml += $"<br/> <a class='application' href='viewDocument.aspx?docId={signed.ID}' onClick='viewDoc'>{signed.Path.Split('\\').Last()}</a>";
 
@@ -109,7 +111,7 @@ namespace AG_webD2
                         status.Value = application.Status;
 
                         // Contract stuff
-                        Document contract = client.GetDocumentByUser(applicant.Id, "contract");
+                        Document contract = client.GET<Document>($"Documents/user={applicant.Id}&type={"contract"}"); //client.GetDocumentByUser(applicant.Id, "contract");
                         if (contract == null || contract.Type != "contract")
                         {
                             download.Attributes["hidden"] = "true";
@@ -125,10 +127,23 @@ namespace AG_webD2
         {
             if (transcript.PostedFile != null)
             {
-                var aply = client.apply(role.Value, module.Value, transcript.PostedFile.FileName, ((User)Session["User"]).Id, status.Value);
-                if (aply != null)
+                //var aply = client.apply(role.Value, module.Value, transcript.PostedFile.FileName, ((User)Session["User"]).Id, status.Value);
+
+                Application application = new Application
+                {
+                    Role = role.Value, 
+                    Module = module.Value, 
+                    Status = status.Value, 
+                    Id = ((User)Session["User"]).Id, 
+                    Transcript = transcript.PostedFile.FileName
+                };
+
+                bool isApplied = client.POST("Applications", application);
+
+                if (!isApplied)
                 {
                     Response.Redirect("apply.aspx");
+                    return;
                 }
 
                 User user = ((User)Session["User"]);
@@ -148,7 +163,7 @@ namespace AG_webD2
         {
             if (transcript.PostedFile != null)
             {
-                User applicant = client.GetUser(int.Parse(Request.QueryString["studentID"]));
+                User applicant = client.GET<User>($"Users/{Request.QueryString["studentID"]}"); // client.GetUser(int.Parse(Request.QueryString["studentID"]));
                 string initials = "";
 
                 foreach (string initial in applicant.Name.Split(' '))
@@ -157,16 +172,25 @@ namespace AG_webD2
                 }
 
                 string filePath = $"{rootDir}{applicant.Surname}{initials}{transcript.PostedFile.FileName}";
+
+                Document document = new Document
+                {
+                    userID = applicant.Id,
+                    Type = "contract",
+                    Path = filePath,
+                    TimeStamp = DateTime.Now
+                };
+
                 // Save file
-                if (client.CreateDocument(applicant.Id, "contract", filePath, DateTime.Now))
-                transcript.PostedFile.SaveAs(Server.MapPath(filePath));
+                if (client.POST("Documents", document)) //client.CreateDocument(applicant.Id, "contract", filePath, DateTime.Now))
+                    transcript.PostedFile.SaveAs(Server.MapPath(filePath));
             }
         }
 
         protected void btnDownload_Clicked(object sender, EventArgs e)
         {
             User user = ((User)Session["User"]);
-            Document contract = client.GetDocumentByUser(user.Id, "contract");
+            Document contract = client.GET<Document>($"Documents/user={user.Id}&type={"contract"}"); //client.GetDocumentByUser(user.Id, "contract");
             if (contract != null)
             {
                 string filePath = Server.MapPath(contract.Path);
@@ -192,8 +216,17 @@ namespace AG_webD2
                 }
 
                 string filePath = $"{rootDir}{user.Username}{initials}{transcript.PostedFile.FileName}_Signed.pdf";
+
                 // Save file
-                if(client.CreateDocument(user.Id, "signed", filePath, DateTime.Now))
+                Document document = new Document
+                { 
+                    userID = user.Id,
+                    Type = "signed",
+                    Path = filePath,
+                    TimeStamp = DateTime.Now
+                };
+
+                if ( client.POST("Documents", document)) //client.CreateDocument(user.Id, "signed", filePath, DateTime.Now))
                 {
                     transcript.PostedFile.SaveAs(Server.MapPath(filePath));
                 }              
@@ -203,16 +236,18 @@ namespace AG_webD2
 
         protected void onStatusChanged(object sender, EventArgs e)
         {
-            User applicant = client.GetUser(int.Parse(Request.QueryString["studentID"]));
-            Application application = client.GetApplication(applicant.Id);
+            User applicant = client.GET<User>($"Users/{Request.QueryString["studentID"]}");// client.GetUser(int.Parse(Request.QueryString["studentID"]));
+            Application application = client.GET<Application>($"Applications/student={applicant.Id}");//client.GetApplication(applicant.Id);
 
             if (application.Status != status.Value)
             {
                 application.Status = status.Value;  // CHange
-                if(client.UpdateApplication(application) && application.Status.ToLower() == "hired")
+                //if(client.UpdateApplication(application) && application.Status.ToLower() == "hired")
+                if(client.PUT("Applications", application) && application.Status.ToLower() == "hired")
                 {
                     applicant.Role = "assistant";
-                    client.updateUserRole(applicant.Id, applicant.Role);
+                    //client.updateUserRole(applicant.Id, applicant.Role);
+                    client.PUT("User", applicant);
                 }
             }
         }
