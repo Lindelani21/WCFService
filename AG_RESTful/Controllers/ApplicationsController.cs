@@ -91,6 +91,9 @@ namespace AG_RESTful.Controllers
         [HttpPost]
         public async Task<ActionResult<Application>> PostApplication(Application application)
         {
+            if (application.ApplicationId == 0)
+                application.ApplicationId = null;
+
             _context.Application.Add(application);
             await _context.SaveChangesAsync();
 

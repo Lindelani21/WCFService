@@ -77,6 +77,9 @@ namespace AG_RESTful.Controllers
         [HttpPost]
         public async Task<ActionResult<Document>> PostDocument(Document document)
         {
+            if (document.ID == 0)
+                document.ID = null;
+
             _context.Document.Add(document);
             await _context.SaveChangesAsync();
 
