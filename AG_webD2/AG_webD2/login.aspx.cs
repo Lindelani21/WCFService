@@ -10,14 +10,17 @@ namespace AG_webD2
 {
     public partial class login : System.Web.UI.Page
     {
-        ServiceClient client = new ServiceClient();
+        //ServiceClient client = new ServiceClient();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if(RESTfulClient.Instance == null)
+                RESTfulClient.InitializeClent("https://localhost:7077/api/");
         }
         protected void btnLogin_Clicked(object sender, EventArgs e)
         {
-            var user = client.Login(name.Value, Secrecy.HashPassword(password.Value));
+            RESTfulClient client = RESTfulClient.Instance;
+
+            User user = client.GET<User>($"Users/user={name.Value}&key={Secrecy.HashPassword(password.Value)}");
 
             if (user != null)
             {

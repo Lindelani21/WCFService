@@ -44,7 +44,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Primitives, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.Serialization.Primitives.4.3.0\lib\net46\System.Runtime.Serialization.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -92,6 +100,7 @@
     <Content Include="profile.aspx" />
     <Content Include="registration.aspx" />
     <Content Include="userManagement.aspx" />
+    <Content Include="viewDocument.aspx" />
     <Content Include="Web.config" />
     <None Include="Connected Services\ServiceReference1\Service2.xsd">
       <SubType>Designer</SubType>
@@ -146,6 +155,7 @@
     <Compile Include="registration.aspx.designer.cs">
       <DependentUpon>registration.aspx</DependentUpon>
     </Compile>
+    <Compile Include="RESTfulClient.cs" />
     <Compile Include="Secrecy.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -160,6 +170,13 @@
     </Compile>
     <Compile Include="userManagement.aspx.designer.cs">
       <DependentUpon>userManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="viewDocument.aspx.cs">
+      <DependentUpon>viewDocument.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="viewDocument.aspx.designer.cs">
+      <DependentUpon>viewDocument.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

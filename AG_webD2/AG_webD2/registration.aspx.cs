@@ -10,7 +10,7 @@ namespace AG_webD2
 {
     public partial class registration : System.Web.UI.Page
     {
-        ServiceClient client = new ServiceClient();
+        //ServiceClient client = new ServiceClient();
         protected void Page_Load(object sender, EventArgs e)
         {
         
@@ -18,10 +18,24 @@ namespace AG_webD2
 
         protected void btnRegister_clicked(object sender, EventArgs e)
         {
-            var reg = client.Registeration(studentNum.Value, name.Value, surname.Value, username.Value, Secrecy.HashPassword(password.Value), "student");
-            if (reg != null)
+            RESTfulClient client = RESTfulClient.Instance;
+
+            User user = new User
             {
-                Console.WriteLine(reg);
+                StudentNum = studentNum.Value,
+                Name = name.Value,
+                Surname = surname.Value,
+                Username = username.Value,
+                Password = Secrecy.HashPassword(password.Value),
+                Role = "student"
+            };
+
+            bool isRegistered = client.POST("Users", user);
+
+            //var reg = client.Registeration(studentNum.Value, name.Value, surname.Value, username.Value, Secrecy.HashPassword(password.Value), "student");
+
+            if (isRegistered) //reg != null)
+            {
                 Response.Redirect("login.aspx");
             }
         }

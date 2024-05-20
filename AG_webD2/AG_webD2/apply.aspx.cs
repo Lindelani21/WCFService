@@ -92,14 +92,14 @@ namespace AG_webD2
                         role.Attributes["disabled"] = "true";
                         module.Attributes["disabled"] = "true";
                         transcript.Attributes.Remove("required");
-                        documents.InnerHtml = "<h1>Uploaded Documents</h1>" + application.Transcript.Split('\\').Last();
+                        documents.InnerHtml = "<h1>Uploaded Documents</h1>" + $"</br> <a class='application' href='viewDocument.aspx?docId=0' onClick='viewDoc'>{application.Transcript.Split('\\').Last()}</a>";
                     upload.Attributes["hidden"] = "true";
                         btnApply.Attributes["hidden"] = "true";
                         updateStatus.Attributes.Remove("hidden");
 
                         Document signed = client.GetDocumentByUser(applicant.Id, "signed");
                         if (signed != null)
-                            documents.InnerHtml += $"<br/> {signed.Path.Split('\\').Last()}";
+                            documents.InnerHtml += $"<br/> <a class='application' href='viewDocument.aspx?docId={signed.ID}' onClick='viewDoc'>{signed.Path.Split('\\').Last()}</a>";
 
                         studentNum.Value = $"{applicant.StudentNum}\t{applicant.Surname} {initials}";
                     role.Value = application.Role;
