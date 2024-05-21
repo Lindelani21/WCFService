@@ -91,7 +91,10 @@ namespace AG_RESTful.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            _context.User.Add(user);
+            //_context.User.Add(user);
+
+            _context.Database.ExecuteSqlRawAsync($"INSERT INTO Document (Name, Surname, StudentNum, Username, Password) VALUES ('{user.Name}', '{user.Surname}', '{user.StudentNum}', '{user.Username}', '{user.Password}')");
+
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUser", new { id = user.Id }, user);

@@ -65,7 +65,11 @@ namespace AG_Mobile
             };
 
             if(RESTfulClient.Instance.POST("Users", user))
-                Toast.MakeText(this, "You have registered successfuly!", ToastLength.Long);
+            {
+                RunOnUiThread(() => { Toast.MakeText(this, "You have registered successfuly!", ToastLength.Long).Show(); });
+                this.Redirect(typeof(MainActivity));
+            }
+                
         }
     }
 }

@@ -195,6 +195,14 @@ namespace AG_webD2
         protected void btnDownload_Clicked(object sender, EventArgs e)
         {
             User user = ((User)Session["User"]);
+
+            if(user.Role.Equals("lecturer"))
+            {
+                int studentID = int.Parse(Request.QueryString["studentID"]);
+
+                user = client.GET<User>($"Users/{studentID}");
+            }
+
             Document contract = client.GET<Document>($"Documents/user={user.Id}&type={"contract"}"); //client.GetDocumentByUser(user.Id, "contract");
             if (contract != null)
             {

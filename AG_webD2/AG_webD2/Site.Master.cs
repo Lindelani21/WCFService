@@ -14,7 +14,6 @@ namespace AG_webD2
         {
             if (Session["User"] == null)
             {
-                NotLoggedin.Attributes.Remove("hidden");
                 return;
             }
 
@@ -30,6 +29,8 @@ namespace AG_webD2
                     LecturerLoggedin.Attributes.Remove("hidden");
                     break;
             }
+
+            
         }
 
         protected void Logout(object sender, EventArgs e)

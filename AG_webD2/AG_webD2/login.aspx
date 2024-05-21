@@ -48,7 +48,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
      <h1>Login</h1>
-   
+    <img src="./Files/AG_Logo.jpg" />
+         <br />
         <span>Username:</span>
         <input type="text" name="username" placeholder="Username" required id="name" runat="server">
         </br>
