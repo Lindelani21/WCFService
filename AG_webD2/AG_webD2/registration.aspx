@@ -52,7 +52,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <div class="container">
      <h1>Register</h1>
-
+         <img src="./Files/AG_Logo.jpg" />
+         <br />
          <span>Student Number:</span>
          <input type="text" name="studentNum" placeholder="Student number" required id="studentNum" runat="server"/>
          </br>
