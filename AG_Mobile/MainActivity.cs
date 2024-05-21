@@ -28,7 +28,7 @@ namespace AG_Mobile
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
-            RESTfulClient.InitializeClent(this);
+            RESTfulClient.InitializeClent(Resources.GetString(Resource.String.base_url));
 
             sharedPrefs = GetSharedPreferences("User", FileCreationMode.Private);
 

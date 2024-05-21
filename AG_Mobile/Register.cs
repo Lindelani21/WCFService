@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using AG_Mobile.Models;
+using Android.App;
 using Android.OS;
 using Android.Runtime;
 using Android.Widget;
@@ -39,47 +40,32 @@ namespace AG_Mobile
 
         protected void onBtnRegisterClicked()
         {
+            string name = FindViewById<AutoCompleteTextView>(Resource.Id.txtName).Text;
+            string surname = FindViewById<AutoCompleteTextView>(Resource.Id.txtSurname).Text;
+            string studentNo = FindViewById<AutoCompleteTextView>(Resource.Id.txtStudentNo).Text;
             string username = FindViewById<AutoCompleteTextView>(Resource.Id.txtUsername).Text;
             string password = FindViewById<AutoCompleteTextView>(Resource.Id.txtPassword).Text;
+            string passwordC = FindViewById<AutoCompleteTextView>(Resource.Id.txtPasswordC).Text;
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://10.0.2.2:7077/api/Users");
-
-            try
+            if(!password.Equals(passwordC))
             {
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    //Read response
-                    StreamReader reader = new StreamReader(response.GetResponseStream());
-                    StringBuilder resp = new StringBuilder();
-                    string line;
-
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        resp.Append(line).Append("\n");
-                    }
-                    reader.Close();
-
-                    // Print response
-                    System.Console.WriteLine("Response from RESTful service:");
-                    System.Console.WriteLine(resp.ToString());
-
-                    message = resp.ToString();
-
-                    // Use Jsoon object
-
-                }
-                else
-                {
-                    message = ("Failed to call function. Response code: " + response.StatusCode);
-                }
-            }
-            catch (WebException ex)
-            {
-                message = ($"Connection failed: {ex.Message}");
+                Toast.MakeText(this, "Passwords do not match!", ToastLength.Long);
+                FindViewById<AutoCompleteTextView>(Resource.Id.txtPassword).Text = string.Empty;
+                FindViewById<AutoCompleteTextView>(Resource.Id.txtPasswordC).Text = string.Empty;
+                return;
             }
 
+            User user = new User
+            {
+                Name = name,
+                Surname = surname,
+                StudentNum = studentNo,
+                Username = username,
+                Password = Secrecy.HashPassword(password)
+            };
+
+            if(RESTfulClient.Instance.POST("Users", user))
+                Toast.MakeText(this, "You have registered successfuly!", ToastLength.Long);
         }
     }
 }

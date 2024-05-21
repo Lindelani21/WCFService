@@ -12,14 +12,15 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AG_Mobile.Models
 {
     public class RESTfulClient
     {
-        private string baseURL;
-        private string message;
-        private static RESTfulClient instance;
+        private string baseURL = null;
+        private string message = null;
+        private static RESTfulClient instance = null;
 
         private RESTfulClient(string baseURL)
         {
@@ -37,18 +38,21 @@ namespace AG_Mobile.Models
             instance = new RESTfulClient(baseURL);
         }
 
-        public static void InitializeClent(Activity activity)
-        {
-            InitializeClent(activity.Resources.GetString(Resource.String.base_url));
-        }
-
         public static RESTfulClient Instance { get { return instance; } }
 
-        public string Message { get => message;}
+        public string Message { get => message; }
 
+        /// <summary>
+        /// Retrieves an existing object from the web api
+        /// </summary>
+        /// <typeparam name="T">Type of the returned object</typeparam>
+        /// <param name="directive">Relative path for the api call e.g "Products/{id}"</param>
+        /// <returns>Retrieved object</returns>
         public T GET<T>(string directive)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"{baseURL}{directive}");
+            request.Method = "GET";
+            request.ContentType = "application/json";
             string JsonObj;
 
             try
@@ -80,7 +84,7 @@ namespace AG_Mobile.Models
                 }
                 else
                 {
-                     message = ("API call failed. Response code: " + response.StatusCode);
+                    message = ("API call failed. Response code: " + response.StatusCode);
                 }
             }
             catch (WebException ex)
@@ -91,5 +95,93 @@ namespace AG_Mobile.Models
 
             return default;
         }
+
+        /// <summary>
+        /// Creates an entry in the database
+        /// </summary>
+        /// <typeparam name="T">Type of the object to be sent to the api</typeparam>
+        /// <param name="directive">Relative path for the api call e.g "Products/{id}</param>
+        /// <param name="data">object to be sent/posted</param>
+        /// <returns>true - success, false - fail</returns>
+        public bool POST<T>(string directive, T data)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"{baseURL}{directive}");
+            request.Method = "POST";
+            request.ContentType = "application/json";
+
+            string jsonObj = JsonConvert.SerializeObject(data);
+            const string regex = ",?\"([a-zA-Z]+)?[iI][dD]\"\\s?:\\s?0,?\r\n";
+            jsonObj = Regex.Replace(jsonObj, regex, string.Empty);
+
+            byte[] bytes = Encoding.UTF8.GetBytes(jsonObj);
+
+            try
+            {
+                // Write to request body
+                Stream stream = request.GetRequestStream();
+                stream.Write(bytes, 0, bytes.Length);
+                stream.Close();
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                if (response.StatusCode == HttpStatusCode.Created)
+                {
+                    message = "API call was successful";
+
+                    return true;
+                }
+                else
+                {
+                    message = ("API call failed. Response code: " + response.StatusCode);
+                }
+            }
+            catch (WebException ex)
+            {
+                message = ($"Connection failed: {ex.Message}");
+                return false;
+            }
+
+            return false;
+        }
+
+        public bool PUT<T>(string directive, T data)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"{baseURL}{directive}");
+            request.Method = "PUT";
+            request.ContentType = "application/json";
+
+            string jsonObj = JsonConvert.SerializeObject(data);
+
+            byte[] bytes = Encoding.UTF8.GetBytes(jsonObj);
+
+            try
+            {
+                // Write to request body
+                Stream stream = request.GetRequestStream();
+                stream.Write(bytes, 0, bytes.Length);
+                stream.Close();
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                if (response.StatusCode == HttpStatusCode.Created)
+                {
+                    message = "API call was successful";
+
+                    return true;
+                }
+                else
+                {
+                    message = ("API call failed. Response code: " + response.StatusCode);
+                }
+            }
+            catch (WebException ex)
+            {
+                message = ($"Connection failed: {ex.Message}");
+                return false;
+            }
+
+            return false;
+        }
+
     }
 }
