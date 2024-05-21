@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace AG_webD2
@@ -104,6 +105,8 @@ namespace AG_webD2
             request.ContentType = "application/json";
 
             string jsonObj = JsonConvert.SerializeObject(data);
+            const string regex = ",?\"([a-zA-Z]+)?[iI][dD]\"\\s?:\\s?0,?\r\n";
+            jsonObj = Regex.Replace(jsonObj, regex, string.Empty);
 
             byte[] bytes = Encoding.UTF8.GetBytes(jsonObj);
 

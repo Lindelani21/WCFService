@@ -10,19 +10,21 @@ namespace AG_webD2
 {
     public partial class applications : System.Web.UI.Page
     {
-        ServiceClient client = new ServiceClient();
+        //ServiceClient client = new ServiceClient();
+        RESTfulClient client = RESTfulClient.Instance;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["User"] == null && ((User)Session["User"]).Role != "lecturer")
                 return;
 
-            Application[] applications = client.GetApplications();
+            Application[] applications = client.GET<Application[]>("Applications"); // client.GetApplications();
             if (applications == null)
                 return;
 
             foreach (Application application in applications)
             {
-                User student = client.GetUser(application.Id);
+                User student = client.GET<User>($"Users/{application.Id}"); // client.GetUser(application.Id);
                 string initials = "";
 
                 foreach (string initial in student.Name.Split(' '))

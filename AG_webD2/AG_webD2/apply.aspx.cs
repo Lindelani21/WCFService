@@ -51,10 +51,11 @@ namespace AG_webD2
                         status.Value = application.Status;
 
                             documents.InnerHtml = "<h1>Uploaded Documents</h1>" + application.Transcript.Split('\\').Last();
+                            documents.InnerHtml = "<h1>Uploaded Documents</h1>" + $"</br> <a class='application' href='viewDocument.aspx?docId=0' onClick='viewDoc'>{application.Transcript.Split('\\').Last()}</a>";
 
                             Document signed = client.GET<Document>($"Documents/user={user.Id}&type={"signed"}"); // client.GetDocumentByUser(user.Id, "signed");
                             if (signed != null)
-                                documents.InnerHtml += $"<br/> {signed.Path.Split('\\').Last()}";
+                                documents.InnerHtml += $"<br/> <a class='application' href='viewDocument.aspx?docId={signed.ID}' onClick='viewDoc'>{signed.Path.Split('\\').Last()}</a>";
 
                             // Contract stuff
                             Document contract= client.GET<Document>($"Documents/user={user.Id}&type={"contract"}"); //client.GetDocumentByUser(user.Id, "contract");
@@ -94,8 +95,8 @@ namespace AG_webD2
                         role.Attributes["disabled"] = "true";
                         module.Attributes["disabled"] = "true";
                         transcript.Attributes.Remove("required");
-                        documents.InnerHtml = "<h1>Uploaded Documents</h1>" + $"</br> <a class='application' href='viewDocument.aspx?docId=0' onClick='viewDoc'>{application.Transcript.Split('\\').Last()}</a>";
-                    upload.Attributes["hidden"] = "true";
+                        documents.InnerHtml = "<h1>Uploaded Documents</h1>" + $"</br> <a class='application' href='viewDocument.aspx?docId=0&studentId={applicant.Id}' onClick='viewDoc'>{application.Transcript.Split('\\').Last()}</a>";
+                        upload.Attributes["hidden"] = "true";
                         btnApply.Attributes["hidden"] = "true";
                         updateStatus.Attributes.Remove("hidden");
 
@@ -129,13 +130,21 @@ namespace AG_webD2
             {
                 //var aply = client.apply(role.Value, module.Value, transcript.PostedFile.FileName, ((User)Session["User"]).Id, status.Value);
 
+                User user = ((User)Session["User"]);
+                string initials = "";
+
+                foreach (string initial in user.Name.Split(' '))
+                {
+                    initials += initial.ElementAt(0);
+                }
+
                 Application application = new Application
                 {
                     Role = role.Value, 
                     Module = module.Value, 
                     Status = status.Value, 
                     Id = ((User)Session["User"]).Id, 
-                    Transcript = transcript.PostedFile.FileName
+                    Transcript = $"{rootDir}{user.Surname}{initials}{transcript.PostedFile.FileName}"
                 };
 
                 bool isApplied = client.POST("Applications", application);
@@ -146,16 +155,9 @@ namespace AG_webD2
                     return;
                 }
 
-                User user = ((User)Session["User"]);
-                string initials = "";
-
-                foreach(string initial in user.Name.Split(' '))
-                {
-                    initials += initial.ElementAt(0);
-                }
-
                 // Save file
-                transcript.PostedFile.SaveAs(Server.MapPath($"{rootDir}{user.Username}{initials}{transcript.PostedFile.FileName}"));
+                transcript.PostedFile.SaveAs(Server.MapPath(application.Transcript));
+                Response.Redirect("apply.aspx");
             }
         }
 
@@ -183,7 +185,10 @@ namespace AG_webD2
 
                 // Save file
                 if (client.POST("Documents", document)) //client.CreateDocument(applicant.Id, "contract", filePath, DateTime.Now))
+                {
                     transcript.PostedFile.SaveAs(Server.MapPath(filePath));
+                    Response.Redirect("apply.aspx");
+                }
             }
         }
 
@@ -215,7 +220,7 @@ namespace AG_webD2
                     initials += initial.ElementAt(0);
                 }
 
-                string filePath = $"{rootDir}{user.Username}{initials}{transcript.PostedFile.FileName}_Signed.pdf";
+                string filePath = $"{rootDir}{user.Username}{initials}{transcript.PostedFile.FileName.Replace(".pdf", string.Empty)}_Signed.pdf";
 
                 // Save file
                 Document document = new Document
@@ -243,11 +248,11 @@ namespace AG_webD2
             {
                 application.Status = status.Value;  // CHange
                 //if(client.UpdateApplication(application) && application.Status.ToLower() == "hired")
-                if(client.PUT("Applications", application) && application.Status.ToLower() == "hired")
+                if(client.PUT($"Applications/{application.ApplicationId}", application) && application.Status.ToLower() == "hired")
                 {
                     applicant.Role = "assistant";
                     //client.updateUserRole(applicant.Id, applicant.Role);
-                    client.PUT("User", applicant);
+                    client.PUT($"User/{applicant.Id}", applicant);
                 }
             }
         }

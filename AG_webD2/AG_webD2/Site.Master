@@ -6,9 +6,16 @@
 <head runat="server">
     <title></title>
          <style>
+
+html{height:100%}
 body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
+    height: 100%;
+}
+
+#form1 div{
+    height: 100%;
 }
 
 .container {
@@ -30,7 +37,7 @@ max-width: 80%;
     background-color: #ffffff;
     border-radius: 5px 5px 0px 0px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    text-align: end;
+    text-align: start;
     position: relative; top: 50px;
              left: 0px;
          }
@@ -52,22 +59,25 @@ max-width: 80%;
 }
 
 .application,
-.nav
-.container input[type="submit"] {
+.nav,
+.container input[type="submit"],
+form input[type="submit"] {
     background-color: #007bff;
     color: #fff;  border-radius: 3px;
     border: none; padding: 10px 20px;
     cursor: pointer;
+    font-size: 14px ;
 }
 
-.application,
-.nav,
-.container input[type="submit"]:hover {
+.application:hover,
+.nav:hover,
+.container input[type="submit"]:hover,
+form input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
 .application,
-heading,
+.heading,
 .nav
 {
     text-decoration: none;
@@ -111,18 +121,21 @@ a. {
                 <a class="nav" href="login.aspx">Log In</a>
                 <a class="nav" href="registration.aspx">Register</a>
 		</div>
-
-		<div class="nav_container" id="StudentLoggedin" hidden runat="server">
-                <a class="nav" href="apply.aspx">Application</a>
-                <a class="nav" href="profile.aspx">Profile</a>
-		</div>
-
-		<div class="nav_container" id="LecturerLoggedin" hidden runat="server">
-                <a class="nav" href="applications.aspx">Applications</a>
-                <a class="nav" href="profile.aspx">Profile</a>
-		</div>
     
     <form id="form1" runat="server">
+        <div class="nav_container" id="StudentLoggedin" hidden runat="server">
+                <a class="nav" href="home.aspx">Home</a>
+                <a class="nav" href="apply.aspx">Application</a>
+                <a class="nav" href="profile.aspx">Profile</a>
+                <asp:Button runat="server" class="nav" OnClick="Logout" text="Logout" ></asp:Button>
+        </div>
+
+        <div class="nav_container" id="LecturerLoggedin" hidden runat="server">
+                <a class="nav" href="home.aspx">Home</a>
+                <a class="nav" href="applications.aspx">Applications</a>
+                <a class="nav" href="profile.aspx">Profile</a>
+                <asp:Button runat="server" class="nav" OnClick="Logout" text="Logout" ></asp:Button>
+        </div>
         <div>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>

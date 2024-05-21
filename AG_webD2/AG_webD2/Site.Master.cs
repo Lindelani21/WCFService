@@ -31,5 +31,11 @@ namespace AG_webD2
                     break;
             }
         }
+
+        protected void Logout(object sender, EventArgs e)
+        {
+            Session.Remove("User");
+            Response.Redirect("login.aspx");
+        }
     }
 }

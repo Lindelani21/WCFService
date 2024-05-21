@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AG_RESTful.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AG_RESTful.Controllers
 {
@@ -32,6 +33,19 @@ namespace AG_RESTful.Controllers
         public async Task<ActionResult<Document>> GetDocument(int id)
         {
             var document = await _context.Document.FindAsync(id);
+
+            if (document == null)
+            {
+                return NotFound();
+            }
+
+            return document;
+        }
+
+        [HttpGet("user={userId}&type={type}")]
+        public ActionResult<Document> GetDocumentByUserAndType(int userId, string type)
+        {
+            var document = _context.Document.Where(doc => doc.userID == userId && doc.Type.Equals(type)).OrderByDescending(doc => doc.ID).FirstOrDefault();
 
             if (document == null)
             {
@@ -77,12 +91,9 @@ namespace AG_RESTful.Controllers
         [HttpPost]
         public async Task<ActionResult<Document>> PostDocument(Document document)
         {
-            if (document.ID == 0)
-                document.ID = null;
-
-            _context.Document.Add(document);
+            //_context.Document.Add(document);
+            _context.Database.ExecuteSqlRawAsync($"INSERT INTO Document (userID, TimeStamp, Type, Path) VALUES ({document.userID}, '{document.TimeStamp.ToString("yyyy-MM-ddTHH:mm:ss.fff")}', '{document.Type}', '{document.Path}')");
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetDocument", new { id = document.ID }, document);
         }
 
@@ -95,10 +106,8 @@ namespace AG_RESTful.Controllers
             {
                 return NotFound();
             }
-
             _context.Document.Remove(document);
             await _context.SaveChangesAsync();
-
             return NoContent();
         }
 

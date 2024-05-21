@@ -91,10 +91,8 @@ namespace AG_RESTful.Controllers
         [HttpPost]
         public async Task<ActionResult<Application>> PostApplication(Application application)
         {
-            if (application.ApplicationId == 0)
-                application.ApplicationId = null;
-
-            _context.Application.Add(application);
+            _context.Database.ExecuteSqlRawAsync($"INSERT INTO Application (Id, Status, Transcript, Module, Role) VALUES ({application.Id}, '{application.Status}', '{application.Transcript}', '{application.Module}', '{application.Role}')");
+            //_context.Application.Add(application);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetApplication", new { id = application.Id }, application);
