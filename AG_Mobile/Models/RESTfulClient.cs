@@ -28,6 +28,10 @@ namespace AG_Mobile.Models
             this.message = string.Empty;
         }
 
+        /// <summary>
+        /// Initializes the base URL of the RESTful API client
+        /// </summary>
+        /// <param name="baseURL">Base URL e.g. https://localhost:{port}/</param>
         public static void InitializeClent(string baseURL)
         {
             if (string.IsNullOrEmpty(baseURL))
@@ -38,6 +42,9 @@ namespace AG_Mobile.Models
             instance = new RESTfulClient(baseURL);
         }
 
+        /// <summary>
+        /// The instance of the RESTful API client. Null if not initialized
+        /// </summary>
         public static RESTfulClient Instance { get { return instance; } }
 
         public string Message { get => message; }
@@ -144,6 +151,13 @@ namespace AG_Mobile.Models
             return false;
         }
 
+        /// <summary>
+        /// Updates an entry in the database
+        /// </summary>
+        /// <typeparam name="T">Type of the object sent to the API</typeparam>
+        /// <param name="directive">Relative path for the api call e.g "Products/{id}</param>
+        /// <param name="data">The updated object to update the entry in the database</param>
+        /// <returns></returns>
         public bool PUT<T>(string directive, T data)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"{baseURL}{directive}");
