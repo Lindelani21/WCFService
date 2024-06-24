@@ -30,6 +30,7 @@ namespace AG_Mobile
 
             RESTfulClient.InitializeClent(Resources.GetString(Resource.String.base_url));
 
+            // This is like the session thingie
             sharedPrefs = GetSharedPreferences("User", FileCreationMode.Private);
 
             loginTab = FindViewById<Button>(Resource.Id.loginTab);
@@ -38,12 +39,16 @@ namespace AG_Mobile
             applicationTab = FindViewById<Button>(Resource.Id.applicationTab);
             UpdateViews();
 
+            // This is self explainatory
             loginTab.Click += delegate { this.Redirect(typeof(Login)); };
             logoutTab.Click += delegate { this.DeleteSharedPreferences("User"); this.RunOnUiThread(() => { UpdateViews(); }); };
             profileTab.Click += delegate { };
             applicationTab.Click += delegate { };
         }
 
+        /// <summary>
+        /// Displays and hides view according to user role
+        /// </summary>
         private void UpdateViews()
         {
             if (sharedPrefs.All.Count != 0)
@@ -76,6 +81,7 @@ namespace AG_Mobile
                 loginTab.Visibility = ViewStates.Visible;
         }
 
+        // I don't remember what this is
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
