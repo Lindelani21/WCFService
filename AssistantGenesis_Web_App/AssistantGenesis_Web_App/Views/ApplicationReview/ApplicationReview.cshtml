@@ -1,0 +1,55 @@
+﻿@page
+@model IEnumerable<Application>
+
+<div class="container-lg">
+    <div class="navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" data-bs-target="pendingApplication" data-bs-toogle="collapse"
+                aria-expanded="true" area-label="Toogle Pending">
+            Pending
+        </button>
+
+        @foreach (var application in Model)
+        {
+            var applicant = RESTfulClient.Instance.GET<User>($"Users/{application.Id}");
+            string info = $"{applicant.Surname} {applicant.Name}\t{application.Module}";
+
+        <button class="navbar-collapse collapse show" id="pendingApplication">
+                @info
+            </button>
+        }
+    </div>
+
+    <div class="navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" data-bs-target="processingApplication" data-bs-toogle="collapse"
+                aria-expanded="true" area-label="Toogle Processing">
+            Processing
+        </button>
+
+        @foreach (var application in Model)
+        {
+            var applicant = RESTfulClient.Instance.GET<User>($"Users/{application.Id}");
+            string info = $"{applicant.Surname} {applicant.Name}\t{application.Module}";
+
+            <button class="navbar-collapse collapse show" id="processingApplication">
+                @info
+            </button>
+        }
+    </div>
+
+    <div class="navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" data-bs-target="processedApplication" data-bs-toogle="collapse"
+                aria-expanded="true" area-label="Toogle Processed">
+            Processed
+        </button>
+
+        @foreach (var application in Model)
+        {
+            var applicant = RESTfulClient.Instance.GET<User>($"Users/{application.Id}");
+            string info = $"{applicant.Surname} {applicant.Name}\t{application.Module}";
+
+            <button class="navbar-collapse collapse show" id="processedApplication">
+                @info
+            </button>
+        }
+    </div>
+</div>
