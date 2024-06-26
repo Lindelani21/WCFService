@@ -11,15 +11,15 @@ namespace AssistantGenesis_Web_App.Controllers
             if (RESTfulClient.Instance == null)
                 RESTfulClient.InitializeClient("https://localhost:7077/api/");
 
-            IEnumerable<Application> Applications = RESTfulClient.Instance.GET<IEnumerable<Application>>("Applications/");
+            IEnumerable<Application> applications = RESTfulClient.Instance.GET<IEnumerable<Application>>("Applications/");
 
-            if(Applications == default)
+            if(applications == default)
             {
-                string message = $"Applications is null, please make sure you have the correct implementation and have applications in your system.";
+                string message = $"applications is null, please make sure you have the correct implementation and have applications in your system.";
                 return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = message });
             }
 
-            return View("ApplicationReview", Applications);
+            return View("ApplicationReview", applications);
         }
     }
 }
