@@ -1,64 +1,42 @@
 ﻿@model IEnumerable<Application>
+
 <div class="container">
-    <div class="col-4">
-        <div class="navbar navbar-expand-lg navbar-light">
-            <button class="navbar-toggler" data-bs-target="pendingApplication" data-bs-toogle="collapse"
-                    aria-expanded="true" area-label="Toogle Pending">
-                Pending
-            </button>
+    <div class="row">
+        <!--This will contain the whole side bar-->
+        <div class="col-4">
+            @{
+                string[] statuses = {"Pending", "Processing", "Processsed"};
 
-            @foreach (var application in Model)
-            {
-                if (application.Status.ToLower() == "pending")
-                    continue;
+                foreach (string status in statuses)
+                {
+                    <div class="navbar navbar-expand-lg navbar-light">
+                        <button class="navbar-toggler" data-bs-target="@($"{status}Application")" data-bs-toogle="collapse"
+                                aria-expanded="true" area-label="Toogle @status">
+                            @status
+                        </button>
 
-                var applicant = RESTfulClient.Instance.GET<User>($"Users/{application.Id}");
-                string info = $"{applicant.Surname} {applicant.Name}\t";
+                        <div class="navbar-collapse collapse show" id="@($"{status}Application")">
+                            @foreach (var application in Model)
+                            {
+                                if (application.Status == null || application.Status.ToLower() != status.ToLower())
+                                    continue;
 
-                <button class="navbar-collapse collapse show" id="pendingApplication">
-                    @info <strong class="alert-dark">@application.Module</strong>
-                </button>
+                                var applicant = RESTfulClient.Instance.GET<User>($"Users/{application.Id}");
+                                string info = $"{applicant.Surname} {applicant.Name}\t";
+
+                                <button>
+                                    @info <strong class="alert-dark">@application.Module</strong>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                }
             }
         </div>
 
-        <div class="navbar navbar-expand navbar-light">
-            <button class="navbar-toggler" data-bs-target="processingApplication" data-bs-toogle="collapse"
-                    aria-expanded="true" area-label="Toogle Processing">
-                Processing
-            </button>
-
-            @foreach (var application in Model)
-            {
-                if (application.Status.ToLower() == "processing")
-                    continue;
-
-                var applicant = RESTfulClient.Instance.GET<User>($"Users/{application.Id}");
-                string info = $"{applicant.Surname} {applicant.Name}\t";
-
-                <button class="navbar-collapse collapse show" id="pendingApplication">
-                    @info <strong class="alert-dark">@application.Module</strong>
-                </button>
-            }
-        </div>
-
-        <div class="navbar navbar-expand-lg navbar-light">
-            <button class="navbar-toggler" data-bs-target="processedApplication" data-bs-toogle="collapse"
-                    aria-expanded="true" area-label="Toogle Processed">
-                Processed
-            </button>
-
-            @foreach (var application in Model)
-            {
-                if (application.Status.ToLower() == "processed")
-                    continue;
-
-                var applicant = RESTfulClient.Instance.GET<User>($"Users/{application.Id}");
-                string info = $"{applicant.Surname} {applicant.Name}\t";
-
-                <button class="navbar-collapse collapse show" id="pendingApplication">
-                    @info <strong class="alert-dark">@application.Module</strong>
-                </button>
-            }
+        <!-- This will have the detailed application -->
+        <div class="col-8">
+        
         </div>
     </div>
 </div>
