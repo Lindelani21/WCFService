@@ -1,8 +1,104 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        /* This is the general styling for the body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+        /* Container for the sidebar and main content on the home page*/
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        /* Styling for links inside the sidebar */
+        .sidebar {
+            background-color: #ff6600;
+            width: 250px;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+            .sidebar a {
+                color: #ffffff;
+                text-decoration: none;
+                display: block;
+                margin: 10px 0;
+            }
+        /* styling the main content area  */
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        /* Header inside the content area */
+        .header {
+            background-color: #333333;
+            color: #ffffff;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        /*These are the drop down menus in the main content*/
+        .card {
+            background-color: #ffffff;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+            .card h2 {
+                margin-top: 0;
+                color: #ff6600;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar with navigation links -->
+        <div class="sidebar">
+            <h2>Navigation</h2>
+            <a href="#">Home</a>
+            <a href="#">Notifications</a>
+            <a href="#">Applications</a>
+            <a href="#">User Management</a>
+            <a href="#">Modules</a>
+        </div>
+        <!-- Main content area -->
+        <div class="content">
+            <div class="header">
+                <!-- Header section -->
+                <h1>Welcome to Assistant Genesis</h1>
+            </div>
+            <div class="card">
+                <h2>Overview</h2>
+                <p>Welcome to the Assistant Genesis portal. Here, lecturers and administrators can manage assistant assignments, applications, and more. Use the navigation links to access different sections of the site.</p>
+                <p>Learn about <a href="https://learn.microsoft.com/aspnet/core" style="color: #ff6600;">building Web apps with ASP.NET Core</a>.</p>
+            </div>
+            <!-- Recent Notifications card -->
+            <div class="card">
+                <h2>Recent Notifications</h2>
+                <p>No new notifications.</p>
+            </div>
+            <!-- Recent Applications card -->
+            <div class="card">
+                <h2>Recent Applications</h2>
+                <p>No new applications.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
