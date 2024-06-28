@@ -8,9 +8,6 @@ namespace AssistantGenesis_Web_App.Controllers
     {
         public IActionResult Index()
         {
-            if (RESTfulClient.Instance == null)
-                RESTfulClient.InitializeClient("https://localhost:7077/api/");
-
             IEnumerable<Application> applications = RESTfulClient.Instance.GET<IEnumerable<Application>>("Applications/");
 
             if(applications == default)

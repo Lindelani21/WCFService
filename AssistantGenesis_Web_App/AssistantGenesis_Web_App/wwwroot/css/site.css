@@ -20,3 +20,57 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* This is the general styling for the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+}
+/* Container for the sidebar and main content on the home page*/
+.container {
+    display: flex;
+    height: 100vh;
+}
+/* Styling for links inside the sidebar */
+.sidebar {
+    background-color: #ff6600;
+    width: 250px;
+    padding: 20px;
+    color: #ffffff;
+}
+
+    .sidebar a {
+        color: #ffffff;
+        text-decoration: none;
+        display: block;
+        margin: 10px 0;
+    }
+/* styling the main content area  */
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f8f9fa;
+}
+/* Header inside the content area */
+.header {
+    background-color: #333333;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+/*These are the drop down menus in the main content*/
+.card {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+    .card h2 {
+        margin-top: 0;
+        color: #ff6600;
+    }
