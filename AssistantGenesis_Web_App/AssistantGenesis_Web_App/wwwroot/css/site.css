@@ -30,10 +30,10 @@ body {
     padding: 0;
 }
 /* Container for the sidebar and main content on the home page*/
-.container {
+/*.container {
     display: flex;
     height: 100vh;
-}
+}*/
 /* Styling for links inside the sidebar */
 .sidebar {
     background-color: #ff6600;
@@ -70,7 +70,11 @@ body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-    .card h2 {
-        margin-top: 0;
-        color: #ff6600;
-    }
+.card h2 {
+    margin-top: 0;
+    color: #ff6600;
+}
+
+.bg-notice-me {
+    background-color: #ff6600;
+}

@@ -1,6 +1,11 @@
 ﻿@model IEnumerable<Application>
 
-<div class="container">
+@{
+    ViewData["Title"] = "Applications Review Page";
+    Application Selected = null;
+}
+
+<div class="">
     <div class="row">
         <!--This will contain the whole side bar-->
         <div class="col-4">
@@ -9,13 +14,17 @@
 
                 foreach (string status in statuses)
                 {
-                    <div class="navbar navbar-expand-lg navbar-primary">
-                        <button class="navbar-toggler" data-bs-target="@($"{status}Application")" data-bs-toogle="collapse"
-                                aria-expanded="true" area-label="Toogle @status">
+                    <div class="">
+                        <button class="btn btn-primary" aria-expanded="true" area-label="Toogle @status">
                             @status
                         </button>
 
-                        <div class="navbar-collapse collapse show" id="@($"{status}Application")">
+                        <div class="" id="@($"{status}Application")">
+
+                            @{
+                                int Applications = 0;
+                            }
+
                             @foreach (var application in Model)
                             {
                                 if (application.Status == null || application.Status.ToLower() != status.ToLower())
@@ -24,10 +33,20 @@
                                 var applicant = RESTfulClient.Instance.GET<User>($"Users/{application.Id}");
                                 string info = $"{applicant.Surname} {applicant.Name}\t";
 
-                                <button>
+                                Applications++;
+
+                                <button class="btn btn-outline-secondary" id="@($"Application{application.ApplicationId}")">
                                     @info <strong class="alert-dark">@application.Module</strong>
                                 </button>
                             }
+
+                            @if(Applications == 0)
+                            {
+                                <span class="">
+                                    There Are No @status Applications.
+                                </span>
+                            }
+
                         </div>
                     </div>
                 }
@@ -36,7 +55,12 @@
 
         <!-- This will have the detailed application -->
         <div class="col-8">
-        
+            @{
+                if(Selected != null)
+                {
+
+                }
+            }
         </div>
     </div>
 </div>
