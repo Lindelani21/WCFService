@@ -58,7 +58,44 @@
             @{
                 if(Selected != null)
                 {
+                    User applicant = RESTfulClient.Instance.GET<User>($"Users/{Selected.Id}");
 
+                    <div>
+                        <span>@($"Email Address: {applicant.StudentNum}@student.uj.ac.za")</span>
+                        <span>@($"Student Number: {applicant.StudentNum}")</span>
+                        <span>@($"Title: {applicant.StudentNum}")</span>
+                        <span>@($"Surname: {applicant.Surname}")</span>
+                        <span>@($"First Name: {applicant.Name}")</span>
+                    </div>
+
+                    <div>
+                        <span>@($"First Name: {applicant.Name}")</span>
+                                    
+                        <div class="modal fade" tabindex="-1" id="AcademicRecord">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+ 
+                                    <div class="modal-header bg-notice-me">
+                                        <span>Academic Record</span>
+                                        <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-outline-secondary">Download</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <span class="align-self-center alert-heading">No Application Is Selected</span>
                 }
             }
         </div>
