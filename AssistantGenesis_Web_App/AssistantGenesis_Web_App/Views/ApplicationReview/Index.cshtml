@@ -2,54 +2,55 @@
 
 @{
     ViewData["Title"] = "Applications Review Page";
-
-    Application Selected = null;
-    if(Model.Count()!=0)
-        Selected = Model.ElementAt(0);
 }
 
 <div class="">
     <div class="row">
         <!--This will contain the whole side bar-->
-        <div class="col-4 gap-2">
+        <div class="col-4">
             @{
                 string[] statuses = {"Pending", "Processing", "Processsed"};
 
-                foreach (string status in statuses)
+                @foreach (string status in statuses)
                 {
-                    <div>
-                        <button type="button" class="btn bg-notice-me dropdown-toggle" data-bs-toggle="collapse" data-bs-target="@($"#{status}Application")" aria-controls="@($"{status}Application")">
-                            @status
-                        </button>
+                    <div class="row m-1">
+                        <div class="col">
+                            <button type="button" class="btn bg-notice-me dropdown-toggle w-100 @(status != statuses[0]?"collapsed":"")" data-bs-toggle="collapse"
+                                    data-bs-target="@($"#{status}Application")" aria-controls="@($"{status}Application")" aria-expanded="@(status == statuses[0]?"true":"false")">
+                                @status
+                            </button>
 
-                        <div class="collapse" id="@($"{status}Application")">
+                            <div class="collapse @(status == statuses[0]?"show":"") m-1" id="@($"{status}Application")">
 
-                            @{
-                                int Applications = 0;
-                            }
+                                @{
+                                    int Applications = 0;
 
-                            @foreach (var application in Model)
-                            {
-                                if (application.Status == null || application.Status.ToLower() != status.ToLower())
-                                    continue;
+                                    <div class="list-group">
+                                        @foreach (var application in Model)
+                                        {
+                                            if (application.Status == null || application.Status.ToLower() != status.ToLower())
+                                                continue;
 
-                                var applicant = RESTfulClient.Instance.GET<User>($"Users/{application.Id}");
-                                string info = $"{applicant.Surname} {applicant.Name}\t";
+                                            var applicant = RESTfulClient.Instance.GET<User>($"Users/{application.Id}");
+                                            string info = $"{applicant.Surname} {applicant.Name}\t";
 
-                                Applications++;
+                                            Applications++;
 
-                                <button class="btn btn-outline-secondary" id="@($"Application{application.ApplicationId}")">
-                                    @info <strong class="alert-dark">@application.Module</strong>
-                                </button>
-                            }
+                                            <button type="button" class="list-group-item list-group-item-action w-100" id="Application@(application.ApplicationId)">
+                                                @info <strong class="alert-dark">@application.Module</strong>
+                                            </button>
+                                        }
+                                    </div>
 
-                            @if(Applications == 0)
-                            {
-                                <span class="">
-                                    There Are No @status Applications.
-                                </span>
-                            }
+                                    @if (Applications == 0)
+                                    {
+                                        <div class="text-center">
+                                            There Are No @status Applications.
+                                        </div>
+                                    }
+                                }
 
+                            </div>
                         </div>
                     </div>
                 }
@@ -59,33 +60,29 @@
         <!-- This will have the detailed application -->
         <div class="col-8">
             @{
-                if(Selected != null)
-                {
-                    User applicant = RESTfulClient.Instance.GET<User>($"Users/{Selected.Id}");
-
+                <div id="ApplicationDetails" hidden>
                     <div class="">
-                        <span>@($"Email Address: ")</span><span id="Email">@($"{applicant.StudentNum}@student.uj.ac.za")</span><br/>
-                        <span>@($"Student Number: ")</span><span id="StudentNum">@($"{applicant.StudentNum}")</span><br/>
-                        <span>@($"Title: ")</span><span id="Title">@($"{applicant.StudentNum}")</span><br/>
-                        <span>@($"Surname: ")</span><span id="Surname">@($"{applicant.Surname}")</span><br/>
-                        <span>@($"First Name: ")</span><span id="FirstName">@($"{applicant.Name}")</span><br/>
+                        <span>@($"Email Address: ")</span><span id="Email"></span><br />
+                        <span>@($"Student Number: ")</span><span id="StudentNum"></span><br />
+                        <span>@($"Title: ")</span><span id="Title"></span><br />
+                        <span>@($"Surname: ")</span><span id="Surname"></span><br />
+                        <span>@($"First Name: ")</span><span id="FirstName"></span><br />
                     </div>
 
                     <div>
                         <span>@($"Academic Record: ")</span>
                         <button type="button" id="AcademicRecord" class="btn bg-notice-me">Will display later</button>
-                                    
-                        <div class="modal fade" tabindex="-1" id="AcademicRecord">
+
+                        <div class="modal fade" tabindex="-1" id="AcademicRecordPDF">
                             <div class="modal-dialog">
                                 <div class="modal-content">
- 
+
                                     <div class="modal-header bg-notice-me">
                                         <span>Academic Record</span>
                                         <button type="button" class="btn btn-close" data-bs-dismiss="modal"></button>
                                     </div>
 
                                     <div class="modal-body">
-
                                     </div>
 
                                     <div class="modal-footer">
@@ -97,23 +94,41 @@
                             </div>
                         </div>
                     </div>
-                }
-                else
-                {
-                    <span class="align-self-center alert-heading">No Application Is Selected</span>
-                }
+
+                    <div class="">
+                        <span>@($"Maximum Hours Available For Each Week: ")</span><span id="MaxHours">@("0 hrs")</span><br />
+                        <span>@($"Prefared Module(s): ")</span><span id="Modules">@("N/A")</span><br />
+                    </div>
+                </div>
+
+                <span class="align-self-center alert-heading" id="NotSelected">No Application Is Selected</span>
             }
         </div>
     </div>
 </div>
 
-@foreach(Application application in Model)
-{
-    // 
-    <style>
-        $("@($"#Application{application.ApplicationId}")".on("click", function()
-        {
-            @Selected = application;
-        });
-    </style>
-}
+<!-- This will handle the updating of the detailed application section) -->
+<script>
+    @foreach(Application application in Model)
+    {
+        User applicant = RESTfulClient.Instance.GET<User>($"Users/{application.Id}");
+
+        <text>
+            document.getElementById("Application@(application.ApplicationId)").addEventListener("click",function(){
+                // Display the details div
+                document.getElementById("ApplicationDetails").hidden = false;
+                // Hide the not selected span
+                document.getElementById("NotSelected").hidden = true;
+
+                document.getElementById("Email").innerHTML = "@($"{applicant.StudentNum}@student.uj.ac.za")";
+                document.getElementById("StudentNum").innerHTML = "@(applicant.StudentNum)";
+                document.getElementById("Title").innerHTML = "@("Mr/Miss")";    // For when the API is complete
+                document.getElementById("Surname").innerHTML = "@(applicant.Surname)";
+                document.getElementById("FirstName").innerHTML = "@(applicant.Name)";
+                document.getElementById("AcademicRecord").innerHTML = "@(application.Transcript!=null?application.Transcript.Split("\\").Last():"N/A")";
+                document.getElementById("MaxHours").innerHTML = "@("0 hrs")";
+                document.getElementById("Modules").innerHTML = "@(application.Module)";
+            });
+        </text>
+    }
+</script>

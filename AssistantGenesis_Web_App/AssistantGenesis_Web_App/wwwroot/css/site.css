@@ -75,6 +75,11 @@ body {
     color: #ff6600;
 }
 
+.dropdown-container{
+    position:relative;
+    display:inline-block;
+}
+
 .bg-notice-me {
     background-color: #ff6600;
 }
