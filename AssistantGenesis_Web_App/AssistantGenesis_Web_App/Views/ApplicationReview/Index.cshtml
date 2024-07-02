@@ -2,7 +2,10 @@
 
 @{
     ViewData["Title"] = "Applications Review Page";
+
     Application Selected = null;
+    if(Model.Count()!=0)
+        Selected = Model.ElementAt(0);
 }
 
 <div class="">
@@ -60,16 +63,17 @@
                 {
                     User applicant = RESTfulClient.Instance.GET<User>($"Users/{Selected.Id}");
 
-                    <div>
-                        <span>@($"Email Address: {applicant.StudentNum}@student.uj.ac.za")</span>
-                        <span>@($"Student Number: {applicant.StudentNum}")</span>
-                        <span>@($"Title: {applicant.StudentNum}")</span>
-                        <span>@($"Surname: {applicant.Surname}")</span>
-                        <span>@($"First Name: {applicant.Name}")</span>
+                    <div class="">
+                        <span>@($"Email Address: ")</span><span id="Email">@($"{applicant.StudentNum}@student.uj.ac.za")</span><br/>
+                        <span>@($"Student Number: ")</span><span id="StudentNum">@($"{applicant.StudentNum}")</span><br/>
+                        <span>@($"Title: ")</span><span id="Title">@($"{applicant.StudentNum}")</span><br/>
+                        <span>@($"Surname: ")</span><span id="Surname">@($"{applicant.Surname}")</span><br/>
+                        <span>@($"First Name: ")</span><span id="FirstName">@($"{applicant.Name}")</span><br/>
                     </div>
 
                     <div>
-                        <span>@($"First Name: {applicant.Name}")</span>
+                        <span>@($"Academic Record: ")</span>
+                        <button type="button" id="AcademicRecord" class="btn bg-notice-me">Will display later</button>
                                     
                         <div class="modal fade" tabindex="-1" id="AcademicRecord">
                             <div class="modal-dialog">
@@ -102,3 +106,14 @@
         </div>
     </div>
 </div>
+
+@foreach(Application application in Model)
+{
+    // 
+    <style>
+        $("@($"#Application{application.ApplicationId}")".on("click", function()
+        {
+            @Selected = application;
+        });
+    </style>
+}
