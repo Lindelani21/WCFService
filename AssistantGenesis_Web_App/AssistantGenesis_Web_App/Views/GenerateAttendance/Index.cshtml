@@ -1,0 +1,134 @@
+﻿@{
+    ViewData["Title"] = "Attendance Page";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        /* Basic styling for the body */
+        body {
+            font-family: Arial, sans-serif; /* Set the font for the page */
+            background-color: #ffffff; /* White background color */
+            color: #333333; /* Dark gray text color */
+            margin: 0; 
+            padding: 0; 
+        }
+
+        /* Header styling */
+        .header {
+            display: flex;
+            justify-content: space-between; /* Space elements evenly */
+            align-items: center; 
+            background-color: #ff6600; /* Orange background color */
+            padding: 10px 20px; 
+            color: #ffffff; /* White text color */
+        }
+
+            .header .logo {
+                font-size: 1.5rem; /* Font size for the logo */
+            }
+
+            .header .title {
+                font-size: 1.4rem; /* Font size for the title */
+            }
+
+        /* Main content styling */
+        .container {
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 60px); 
+            padding: 20px; /* Padding inside the container */
+        }
+
+            .container h1 {
+                color: #ff6600; /* Orange color for the heading */
+            }
+
+        .input-box {
+            margin: 10px 0; /* Space above and below the input box */
+        }
+
+            .input-box label {
+                display: block; /* Display as block element */
+                margin-bottom: 5px; /* Space below the label */
+                font-weight: bold; /* Bold font for the label */
+            }
+
+            .input-box input {
+                width: 300px; /* Set width for the input field */
+                padding: 10px; /* Padding inside the input field */
+                border: 1px solid #ccc; /* Light gray border */
+                border-radius: 5px; /* Rounded corners */
+            }
+
+        .buttons {
+            margin-top: 20px; /* Space above the button group */
+        }
+
+            .buttons button {
+                background-color: #ff6600; /* Orange background color */
+                color: #ffffff; /* White text color */
+                border: none; /* No border */
+                padding: 10px 20px; 
+                margin: 5px; 
+                border-radius: 5px; 
+                cursor: pointer; 
+            }
+
+                .buttons button.back {
+                    background-color: #333333; /* Dark gray background color for the back button */
+                }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <div class="logo">Assistant Genesis</div>
+        <!-- Removed the hamburger menu -->
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="container">
+        <h1>Generate Attendance</h1>
+
+        <!-- Input box for module name or code -->
+        <div class="input-box">
+            <label for="module">Module</label>
+            <input type="text" id="module" placeholder="Enter module name or code">
+        </div>
+
+        <!-- Input box for displaying current date and time -->
+        <div class="input-box">
+            <label for="datetime">Date and Time</label>
+            <input type="text" id="datetime" readonly>
+        </div>
+
+        <!-- Buttons for generating attendance and going back -->
+        <div class="buttons">
+            <button onclick="generateAttendance()">Generate Attendance</button>
+            <button class="back" onclick="goBack()">Back</button>
+        </div>
+    </div>
+
+    <script>
+        // Set the current date and time
+        document.getElementById('datetime').value = new Date().toLocaleString();
+
+        // Function for generating attendance
+        function generateAttendance() {
+            alert('Attendance code generated!');
+        }
+
+        // Function for going back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
+

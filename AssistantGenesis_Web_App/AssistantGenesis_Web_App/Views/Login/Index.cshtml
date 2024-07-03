@@ -1,1 +1,91 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Login Page";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        /* Basic styling for the body */
+        body {
+            font-family: Arial, sans-serif; /* Set the font for the page */
+            background-color: #ffffff; /* White background color */
+            color: #333333; /* Dark gray text color */
+            background: #f8f9fa; /* Light gray background color */
+            margin: 0;
+            padding: 0; 
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            height: 100vh; 
+        }
+
+        /* Container for the login form */
+        .login-container {
+            background-color: #ffffff; /* White background color */
+            padding: 40px; 
+            border-radius: 9px; 
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1); 
+            width: 100%; 
+            max-width: 600px; 
+            text-align: center; 
+        }
+
+        /* Styling for the main heading */
+        .login-container h1 {
+            color: #ff6600; /* Orange color for the heading */
+            margin-bottom: 20px; /* Space below the heading */
+        }
+            /* Styling for input fields */
+            .login-container input[type="text"],
+            .login-container input[type="password"] {
+                width: 100%; 
+                padding: 10px; 
+                margin: 10px 0; 
+                border: 1px solid #ccc; /* Light gray border */
+                border-radius: 5px; 
+            }
+
+            /* Styling for the login button */
+            .login-container button {
+                background-color: #ff6600; /* Orange background color */
+                color: #ffffff; /* White text color */
+                border: none; 
+                padding: 10px;
+                border-radius: 4px; 
+                cursor: pointer;
+                width: 100%; 
+                margin: 20px 0; 
+            }
+
+                /* Hover effect for the login button */
+                .login-container button:hover {
+                    background-color: #e65c00; /* Darker orange background color */
+                }
+
+            /* Styling for links */
+            .login-container a {
+                color: #333333; /* Dark gray text color */
+                text-decoration: none; /* Remove underline */
+            }
+
+                /* Hover effect for links */
+                .login-container a:hover {
+                    text-decoration: underline; /* Underline on hover */
+                }
+    </style>
+</head>
+<body>
+    <!-- Container for the login form -->
+    <div class="login-container">
+        <h1>Assistant Genesis</h1> <!-- Main heading -->
+        <input type="text" placeholder="Username" /> <!-- Username input field -->
+        <input type="password" placeholder="Password" /> <!-- Password input field -->
+        <button>Login</button> <!-- Login button -->
+        <p><a href="#">Forgot your password?</a></p> <!-- Link to reset password -->
+        <p>New user? <a href="#">Click here to sign up</a>.</p> <!-- Link to sign up -->
+    </div>
+</body>
+</html>
