@@ -6,8 +6,6 @@ namespace AssistantGenesis_Web_App.Controllers
 {
     public class ApplicationReviewController : Controller
     {
-        //creating an instance of an application
-        public static Application? SelectedApplication { get; set; }
 
         //method returning an IActionREsult
         public IActionResult Index()
@@ -22,8 +20,6 @@ namespace AssistantGenesis_Web_App.Controllers
 
                 //create new list of applications
                 return View(new List<Application>());
-
-            SelectedApplication = applications.ElementAt(0);
 
             return View(applications);
         }
