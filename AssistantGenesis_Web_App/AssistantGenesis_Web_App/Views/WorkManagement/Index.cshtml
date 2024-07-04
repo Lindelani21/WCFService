@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewData["Title"] = "WorkManagement Page";
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,21 +20,12 @@
         .container {
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Ensures full height of the viewport */
+            min-height: 100vh;
+            padding: 20px;
         }
-
-        /* Header styling */
-        .header {
-            background-color: #333333; /* Dark gray background */
-            color: #ffffff; /* White text color */
-            padding: 10px 20px; /* Padding inside the header */
-            display: flex;
-            justify-content: space-between; /* Space elements evenly */
-            align-items: center; /* Align items in the center vertically */
-        }
-
         .header h1 {
             margin: 0; /* Remove default margin */
+			color: #ff6600; /* Orange color for the heading */
         }
 
         /* Main content area */
@@ -94,7 +88,6 @@
             cursor: pointer; /* Pointer cursor on hover */
         }
 
-       
         }
     </style>
 </head>
@@ -104,7 +97,6 @@
         <div class="header">
             <h1>Work Management</h1>
         </div>
-
         <!-- Main Content Area -->
         <div class="content">
             <!-- Search Box -->
@@ -135,4 +127,3 @@
     </div>
 </body>
 </html>
-

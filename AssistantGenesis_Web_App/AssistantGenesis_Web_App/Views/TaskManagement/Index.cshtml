@@ -1,0 +1,226 @@
+﻿@{
+    ViewData["Title"] = "TaskManagement Page";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #ffffff;
+        color: #333333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+
+    .header {
+        width: 100%;
+        text-align: center;
+        background-color: #ff6600;
+        color: #ffffff;
+        padding: 20px;
+    }
+
+    .search-box {
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+        .search-box input {
+            width: 50%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-box button {
+            padding: 10px; /* Padding inside the button */
+            border: 1px solid #ccc; /* Light gray border */
+            background-color: #ff6600; /* Orange background color */
+            color: #ffffff; /* White text color */
+            border-radius: 0 5px 5px 0; /* Rounded right corners */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+    .main-content {
+        display: flex;
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 250px;
+        background-color: #f8f9fa;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+        .sidebar select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+    .content {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .assistant-list {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+
+        .assistant-list h3 {
+            color: #ff6600;
+        }
+
+    .assistant-item {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+        .assistant-item:last-child {
+            border-bottom: none;
+        }
+
+        .assistant-item h4 {
+            margin: 0;
+            color: #333333;
+        }
+
+    .progress-btn {
+        background-color: #ff6600;
+        color: #ffffff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .task-details {
+        margin-top: 10px;
+    }
+
+    .feedback-box {
+        margin-top: 10px;
+    }
+
+        .feedback-box textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+    .buttons {
+        margin-top: 10px;
+    }
+
+        .buttons button {
+            background-color: #ff6600;
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .buttons .back {
+            background-color: #333333;
+        }
+ </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Task Progress</h1>
+    </div>
+
+    <div class="search-box">
+        <input type="text" placeholder="Search assistant by username">
+        <button>Search</button>
+    </div>
+
+    <div class="main-content">
+    <div class="sidebar">
+        <h3>Filter by:</h3>
+        <select>
+            <option value="">Select Module</option>
+            <option value="module1">Module 1</option>
+            <option value="module2">Module 2</option>
+        </select>
+        <select>
+            <option value="">Select Task</option>
+            <option value="marking">Marking</option>
+            <option value="invigilating">Invigilating</option>
+            <option value="tutoring">Tutoring</option>
+        </select>
+    </div>
+
+    <div class="content">
+    <div class="assistant-list">
+        <h3>Assistants</h3>
+        <div class="assistant-item">
+            <h4>Username: assistant1</h4>
+            <p>Role: Tutor</p>
+            <button class="progress-btn" onclick="toggleTaskDetails('assistant1')">View Progress</button>
+            <div class="task-details" id="assistant1-tasks" style="display: none;">
+                <p>Task 1: Marking</p>
+                <p>Task 2: Tutoring</p>
+                <div class="feedback-box">
+                    <label for="feedback-assistant1">Feedback:</label>
+                    <textarea id="feedback-assistant1" rows="3"></textarea>
+                </div>
+                <div class="buttons">
+                    <button onclick="provideGuidance('assistant1')">Provide Guidance</button>
+                    <button class="back" onclick="goBack()">Back</button>
+                </div>
+            </div>
+            </div>
+                <!-- Repeat .assistant-item for other assistants -->
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function toggleTaskDetails(assistantId) {
+        var taskDetails = document.getElementById(assistantId + '-tasks');
+        if (taskDetails.style.display === 'none' || taskDetails.style.display === '') {
+            taskDetails.style.display = 'block';
+        } else {
+            taskDetails.style.display = 'none';
+        }
+    }
+
+    function provideGuidance(assistantId) {
+        var feedback = document.getElementById('feedback-' + assistantId).value;
+        alert('Guidance provided for ' + assistantId + ' with feedback: ' + feedback);
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+</html>
+
