@@ -1,4 +1,5 @@
-﻿@{
+﻿@model AssistantGenesis_Web_App.Models.login;
+@{
     ViewData["Title"] = "Login Page";
 }
 <!DOCTYPE html>
@@ -79,13 +80,28 @@
 </head>
 <body>
     <!-- Container for the login form -->
-    <div class="login-container">
-        <h1>Assistant Genesis</h1> <!-- Main heading -->
-        <input type="text" placeholder="Username" /> <!-- Username input field -->
-        <input type="password" placeholder="Password" /> <!-- Password input field -->
-        <button>Login</button> <!-- Login button -->
-        <p><a href="#">Forgot your password?</a></p> <!-- Link to reset password -->
-        <p>New user? <a href="#">Click here to sign up</a>.</p> <!-- Link to sign up -->
-    </div>
+    <!--Nat adding a form to see if it will work with login-->
+   <form class="form-horizontal" asp-action="MyIndex">
+        <div class="login-container">
+            <h1>Assistant Genesis</h1> <!-- Main heading -->
+            <input type="text" placeholder="Username" asp.for="Id" /> <!-- Username input field -->
+            <input type="password" placeholder="Password" asp.for="Password" /> <!-- Password input field -->
+            <button>Login</button> <!-- Login button -->
+            <p><a href="#">Forgot your password?</a></p> <!-- Link to reset password -->
+            <p>New user? <a href="#">Click here to sign up</a>.</p> <!-- Link to sign up -->
+        </div>
+
+   </form>
+    
 </body>
+
+
 </html>
+@{
+    if (TempData["msg"] != null)
+    {
+        <script>
+        alert('@TempData["msg"]')
+        </script>
+    }
+}
