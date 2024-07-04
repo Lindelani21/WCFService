@@ -12,8 +12,8 @@ namespace AssistantGenesis_Web_App.Models
 {
     public class db
     {
-        // 
-        SqlConnection con = new SqlConnection(@"Data Source=tcp:(LocalDB)\MSSQLLocalDB;AttachDbFilename=""C:\Users\mabai\Desktop\IFM3A\Group project\Code-Lindelani-Practice\AG_RESTful\App_Data\Database.mdf"";Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
+
+        SqlConnection con = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\mabai\\Desktop\\IFM3A\\Group project\\Code-Lindelani-Practice\\AG_RESTful\\App_Data\\Database.mdf\";Integrated Security=True;Connect Timeout=30;Encrypt=True");
         public int LoginCheck(login aUser)
         {
             SqlCommand com = new SqlCommand("Sp_login", con);

@@ -16,10 +16,13 @@ namespace AssistantGenesis_Web_App.Controllers
         [HttpPost]
         public IActionResult MyIndex([Bind] login ad)
         {
+            //use the restful client and call on the API and check if it is null or not and then do the validation thing
             int res = dbop.LoginCheck(ad);
             if (res == 1)
             {
+                //user should be stored in a session variable 
                 TempData["msg"] = "Welcome";
+
             }
             else
             {
