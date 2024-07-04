@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Task Process";
+}
+
+<h1 class="text-notice-me text-center w-100">Task Progress</h1>
+
+<div class="row">
+    <div class="col-4">
+        <button type="button" class="btn bg-notice-me dropdown-toggle w-100" data-bs-toggle="collapse"
+                data-bs-target="ModulesDropdown" aria-controls="ModulesDropdown" aria-expanded="false">
+            Modules
+        </button>
+
+        <div class="collapse m-1" id="ModulesDropdown">
+            <!-- This where we'll have Modules -->
+            <div>
+                Informatics 1A
+            </div>
+        </div>
+
+        <button type="button" class="btn bg-notice-me dropdown-toggle w-100" data-bs-toggle="collapse"
+                data-bs-target="TasksDropdown" aria-controls="TasksDropdown" aria-expanded="false">
+            Tasks
+        </button>
+
+        <div class="collapse m-1" id="TasksDropdown">
+            <!-- This where we'll have Tasks -->
+            <div>
+                Tutoring
+            </div>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="input-group">
+            <div class="input-group-text">Search icon</div>
+            <input type="text" class="form-control" />
+        </div>
+        <br/>
+        <div>
+            <!-- This is where we'll have the assistants-->
+            <div>
+                <span id="Role">Tutor@("\t")</span>
+                <span id="Username">MacMiller@("\t")</span>
+                <button id="Progress" type="button" class="btn bg-notice-me">Progress</button>
+            </div>
+
+            <div>
+                <span id="Role">Marker@("\t")</span>
+                <span id="Username">NatMab@("\t")</span>
+                <button id="Progress" type="button" class="btn bg-notice-me">Progress</button>
+            </div>
+        </div>
+    </div>
+</div>
