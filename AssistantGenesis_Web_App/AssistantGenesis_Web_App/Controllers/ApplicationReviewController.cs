@@ -6,7 +6,6 @@ namespace AssistantGenesis_Web_App.Controllers
 {
     public class ApplicationReviewController : Controller
     {
-        public static Application? SelectedApplication { get; set; }
 
         public IActionResult Index()
         {
@@ -14,8 +13,6 @@ namespace AssistantGenesis_Web_App.Controllers
 
             if(applications == default)
                 return View(new List<Application>());
-
-            SelectedApplication = applications.ElementAt(0);
 
             return View(applications);
         }
