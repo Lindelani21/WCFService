@@ -37,19 +37,22 @@ namespace AG_Mobile
             sharedPrefs = GetSharedPreferences("User", FileCreationMode.Private);
             editor = sharedPrefs.Edit();
 
-            Thread loginThread = new Thread(onBtnLoginClicked) { IsBackground = true };
+            //Thread loginThread = new Thread(onBtnLoginClicked) { IsBackground = true };
 
             btnLogin = FindViewById<Button>(Resource.Id.btnLogin);
             btnLogin.Click += delegate
             {
-               if (loginThread.ThreadState != ThreadState.Running)
-                    loginThread.Start();
-               else
-                {
-                    loginThread.Abort();
-                    loginThread.Start();
-                }
+                onBtnLoginClicked();
             };
+            //{
+            //   if (loginThread.ThreadState != ThreadState.Running)
+            //        loginThread.Start();
+            //   else
+            //    {
+            //        loginThread.Abort();
+            //        loginThread.Start();
+            //    }
+            //};
 
             lnkRegister = FindViewById<TextView>(Resource.Id.lnkRegister);
             lnkRegister.Click += delegate { this.Redirect(typeof(Register)); };
@@ -61,14 +64,16 @@ namespace AG_Mobile
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        protected void onBtnLoginClicked()
+        protected async void onBtnLoginClicked()
         {
             string username = FindViewById<AutoCompleteTextView>(Resource.Id.txtUsername).Text;
             string password = Secrecy.HashPassword(FindViewById<AutoCompleteTextView>(Resource.Id.txtPassword).Text);
 
             RESTfulClient client = RESTfulClient.Instance;
 
-            User user = client.GET<User>($"Users/user={username}&key={password}");
+            //User user = client.GET<User>($"Users/user={username}&key={password}");
+            User user = await client.GET_Async<User>($"Users/user={username}&key={password}");
+
             RunOnUiThread(() => { Toast.MakeText(BaseContext, client.Message, ToastLength.Long).Show(); });
 
             if (user != null)
