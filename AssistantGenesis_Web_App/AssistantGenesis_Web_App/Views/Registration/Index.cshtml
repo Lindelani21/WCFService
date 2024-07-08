@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Registration Page";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+</head>
+<style>
+    /* Basic styling for the body */
+    body {
+        font-family: Arial, sans-serif; /* Set the font for the page */
+        background-color: #ffffff; /* White background color */
+        color: #333333; /* Dark gray text color */
+        background: #f8f9fa; /* Light gray background color */
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    /* Container for the registration form */
+    .registration-container {
+        background-color: #ffffff; /* White background color */
+        padding: 40px;
+        border-radius: 9px;
+        box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        align-items: center; /* Center elements horizontally */
+        justify-content: center; /* Center elements vertically */
+    }
+
+        /* Styling for the main heading */
+        .registration-container h1 {
+            color: #ff6600; /* Orange color for the heading */
+            margin-bottom: 20px; /* Space below the heading */
+        }
+        /* Styling for input fields */
+        .registration-container input[type="text"],
+        .registration-container input[type="password"],
+        .registration-container input[type="email"],
+        {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 5px;
+        }
+
+        /* Styling for the registration button */
+        .registration-container button {
+            background-color: #ff6600; /* Orange background color */
+            color: #ffffff; /* White text color */
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+            /* Hover effect for the registration button */
+            .registration-container button:hover {
+                background-color: #e65c00; /* Darker orange background color */
+            }
+
+        /* Styling for links */
+        .registration-container a {
+            color: #333333; /* Dark gray text color */
+            text-decoration: none; /* Remove underline */
+        }
+
+            /* Hover effect for links */
+            .registration-container a:hover {
+                text-decoration: underline; /* Underline on hover */
+            }
+</style>
+<body>
+    <div class="registration-container">
+
+        <h1>Assistant Genesis</h1> <!-- Main heading -->
+
+        <input type="text" placeholder="Name" asp.for="Name" /> <!-- Name input field -->
+        <input type="text" placeholder="Surname" asp.for="Surname" /> <!-- Surname input field -->
+        <input type="text" placeholder="StaffNumber" asp.for="StaffNumber" /> <!-- StaffNumber input field -->
+        <input type="text" placeholder="Username" asp.for="Username" /> <!-- Username input field -->
+        <input type="email" placeholder="Email" asp.for="Email" /> <!-- Email input field -->
+        <input type="password" placeholder="Password" asp.for="Password" /> <!-- Password input field -->
+
+        <button>Register</button> <!-- Register button -->
+
+        <p>Already a user <a href="#">Click here to sign login</a>.</p> <!-- Link to login -->
+    </div>
+
+</body>
+</html>

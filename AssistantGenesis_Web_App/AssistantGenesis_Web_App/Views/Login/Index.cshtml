@@ -1,4 +1,4 @@
-﻿@model AssistantGenesis_Web_App.Models.login;
+﻿@model AssistantGenesis_Web_App.Models.User;
 @{
     ViewData["Title"] = "Login Page";
     Layout = null;
@@ -87,7 +87,7 @@
    <form class="form-horizontal" asp-action="MyIndex">
         <div class="login-container">
             <h1>Assistant Genesis</h1> <!-- Main heading -->
-            <input type="text" placeholder="Username" asp.for="Id" /> <!-- Username input field -->
+            <input type="text" placeholder="Username" asp.for="Username" /> <!-- Username input field -->
             <input type="password" placeholder="Password" asp.for="Password" /> <!-- Password input field -->
             <button>Login</button> <!-- Login button -->
             <p><a href="#">Forgot your password?</a></p> <!-- Link to reset password -->
