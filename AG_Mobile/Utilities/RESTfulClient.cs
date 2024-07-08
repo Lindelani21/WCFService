@@ -16,7 +16,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace AG_Mobile.Models
+namespace AG_Mobile.Utilities
 {
     public class RESTfulClient
     {

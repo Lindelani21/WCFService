@@ -13,6 +13,12 @@
         android:layout_centerInParent="true"
         android:id="@+id/form">
 
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:contentDescription="Assistant Genesis Logo"/>
+
         <GridLayout
        android:minWidth="25px"
        android:minHeight="25px"

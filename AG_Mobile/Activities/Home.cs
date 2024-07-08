@@ -6,12 +6,14 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using System.Net;
-using AG_Mobile.Models;
+using AG_Mobile.Utilities;
+using System.IO;
+using Android.Graphics;
 
-namespace AG_Mobile
+namespace AG_Mobile.Activities
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity
+    public class Home : AppCompatActivity
     {
         ISharedPreferences sharedPrefs;
 
@@ -24,8 +26,8 @@ namespace AG_Mobile
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            SetContentView(Resource.Layout.activity_main);
-
+            SetContentView(Resource.Layout.home);
+         
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
             RESTfulClient.InitializeClent(Resources.GetString(Resource.String.base_url));
@@ -41,7 +43,7 @@ namespace AG_Mobile
 
             // This is self explainatory
             loginTab.Click += delegate { this.Redirect(typeof(Login)); };   // Function is in models -> ActivityExtensions. This is what needs fixing
-            logoutTab.Click += delegate { this.DeleteSharedPreferences("User"); this.RunOnUiThread(() => { UpdateViews(); }); };
+            logoutTab.Click += delegate { this.DeleteSharedPreferences("User"); this.Redirect(typeof(Login)); };
             profileTab.Click += delegate { };
             applicationTab.Click += delegate { };
         }
@@ -78,7 +80,7 @@ namespace AG_Mobile
                 }
             }
             else
-                loginTab.Visibility = ViewStates.Visible;
+                this.Redirect(typeof(Login));
         }
 
         // I don't remember what this is

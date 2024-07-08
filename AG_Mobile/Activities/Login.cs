@@ -1,6 +1,8 @@
 ﻿using AG_Mobile.Models;
+using AG_Mobile.Utilities;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -14,7 +16,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 
-namespace AG_Mobile
+namespace AG_Mobile.Activities
 {
     [Activity(Label = "Login")]
     public class Login : Activity
@@ -31,6 +33,28 @@ namespace AG_Mobile
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.login);
+
+            // Set logo image
+            ImageView imgLogo = FindViewById<ImageView>(Resource.Id.imgLogo);
+            Stream stream = Assets.Open("Images/ag_logo.png");
+
+            const int size = 5 * 1024;
+            List<byte[]> buffers = new List<byte[]>();
+            buffers.Add(new byte[size]);
+
+            int index = 0;
+            while(stream.Read(buffers.ElementAt(index), 0, size) == size)
+            {
+                buffers.Add(new byte[size]);
+                index++;
+            }
+
+            byte[] bytes = new byte[size * buffers.Count()];
+
+            for(int i=0; i <= index; i++)
+                Array.Copy(buffers.ElementAt(i), 0, bytes, i * size, size);
+       
+            imgLogo.SetImageBitmap(BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length));
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
@@ -85,7 +109,7 @@ namespace AG_Mobile
 
                 editor.Apply();
 
-                RunOnUiThread(new Action(() => { Toast.MakeText(this, "You have successful logged in!", ToastLength.Long).Show(); this.Redirect(typeof(MainActivity)); }));
+                RunOnUiThread(new Action(() => { Toast.MakeText(this, "You have successful logged in!", ToastLength.Long).Show(); this.Redirect(typeof(Home)); }));
             }
             else
                 RunOnUiThread( () => { Toast.MakeText(this, "Your login was unsuccessful! Make sure your credentials are correct.", ToastLength.Long).Show(); });

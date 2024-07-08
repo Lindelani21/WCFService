@@ -2,7 +2,7 @@
 using Android.Content;
 using System;
 
-namespace AG_Mobile.Models
+namespace AG_Mobile.Utilities
 {
     public static class ActivityExtensions
     {
