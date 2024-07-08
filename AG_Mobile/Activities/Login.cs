@@ -7,14 +7,11 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading;
 
 namespace AG_Mobile.Activities
 {
@@ -36,25 +33,7 @@ namespace AG_Mobile.Activities
 
             // Set logo image
             ImageView imgLogo = FindViewById<ImageView>(Resource.Id.imgLogo);
-            Stream stream = Assets.Open("Images/ag_logo.png");
-
-            const int size = 5 * 1024;
-            List<byte[]> buffers = new List<byte[]>();
-            buffers.Add(new byte[size]);
-
-            int index = 0;
-            while(stream.Read(buffers.ElementAt(index), 0, size) == size)
-            {
-                buffers.Add(new byte[size]);
-                index++;
-            }
-
-            byte[] bytes = new byte[size * buffers.Count()];
-
-            for(int i=0; i <= index; i++)
-                Array.Copy(buffers.ElementAt(i), 0, bytes, i * size, size);
-       
-            imgLogo.SetImageBitmap(BitmapFactory.DecodeByteArray(bytes, 0, bytes.Length));
+            imgLogo.SetImageBitmap(this.GetImageAsset("ag_logo"));
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
