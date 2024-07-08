@@ -35,5 +35,24 @@ namespace AssistantGenesis_Web_App.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Index(string username, string password)
+        {
+            User user = RESTfulClient.Instance.GET<User>($"Users/user={username}&key={Secrecy.HashPassword(password)}");
+
+            if (user == null)
+            {
+                TempData["msg"] = "Invalid login credentials";
+                TempData["success"] = false;
+
+                return View();
+            }
+
+            TempData["msg"] = "You were succesfuly logged in";
+            TempData["success"] = true;
+
+            return View();
+        }
     }
 }
