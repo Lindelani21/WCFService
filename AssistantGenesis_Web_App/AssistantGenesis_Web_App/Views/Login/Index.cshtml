@@ -1,5 +1,4 @@
-﻿@model AssistantGenesis_Web_App.Models.User;
-@{
+﻿@{
     ViewData["Title"] = "Login Page";
     Layout = null;
 }
@@ -9,6 +8,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AssistantGenesis_Web_App.styles.css" asp-append-version="true" />
     <style>
         /* Basic styling for the body */
         body {
@@ -84,7 +86,7 @@
 <body>
     <!-- Container for the login form -->
     <!--Nat adding a form to see if it will work with login-->
-   <form class="form-horizontal" asp-action="MyIndex">
+@*    <form class="form-horizontal" asp-action="MyIndex">
         <div class="login-container">
             <h1>Assistant Genesis</h1> <!-- Main heading -->
             <input type="text" placeholder="Username" asp.for="Username" /> <!-- Username input field -->
@@ -94,6 +96,21 @@
             <p>New user? <a href="#">Click here to sign up</a>.</p> <!-- Link to sign up -->
         </div>
 
+   </form> *@
+
+    <form class="form-horizontal" asp-controller="Login" asp-action="Index">
+        <div class="login-container">
+            <h1>Assistant Genesis</h1> <!-- Main heading -->
+            <input type="text" placeholder="Username" name="Username" /> <!-- Username input field -->
+            <input type="password" placeholder="Password" name="Password" /> <!-- Password input field -->
+            <button>Login</button> <!-- Login button -->
+            <div class="w-100 alert @(TempData["success"] != null?(((bool)TempData["success"])?"alert-success":"alert-danger"):"")">
+                <div id="loginMessage" class=""></div>
+                <span id="countdown"></span>
+            </div>
+            <p><a href="#">Forgot your password?</a></p> <!-- Link to reset password -->
+            <p>New user? <a href="#">Click here to sign up</a>.</p> <!-- Link to sign up -->
+        </div>
    </form>
     
 </body>
@@ -104,7 +121,34 @@
     if (TempData["msg"] != null)
     {
         <script>
-        alert('@TempData["msg"]')
+            // alert('@TempData["msg"]');
+
+            document.addEventListener("DOMContentLoaded", function()
+            {
+                var loginMessage = document.getElementById("loginMessage");
+
+                loginMessage.innerHTML = "@TempData["msg"]";
+
+                @if((bool)TempData["success"])
+                {
+                    <text>
+                        var seconds = 5;
+
+                        var countdown = setInterval(function()
+                        {
+                            if (0 >= seconds)
+                            {
+                                clearInterval(countdown);
+                                window.location.href = "@Url.Action("Index", "Home")";
+                            }
+
+                            document.getElementById("countdown").innerHTML = "You will be redirected to the home page in <strong>" + seconds + "</strong>";
+                            seconds--;
+                        }, 1000);
+
+                    </text>
+                }
+            });
         </script>
     }
 }
