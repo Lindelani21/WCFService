@@ -54,5 +54,10 @@ namespace AssistantGenesis_Web_App.Controllers
 
             return View();
         }
+
+        public IActionResult Index1()
+        {
+            return View();
+        }
     }
 }
