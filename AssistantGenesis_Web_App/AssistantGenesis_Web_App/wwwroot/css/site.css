@@ -87,3 +87,51 @@ body {
 .text-notice-me {
     color: #ff6600;
 }
+
+/*adding styling for any types of forms(login,registration)*/
+
+/* Container for the login form */
+.main-container {
+    background-color: #ffffff; /* White background color */
+    padding: 40px;
+    border-radius: 9px;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    align-items: center; /* Center elements horizontally */
+    justify-content: center; /* Center elements vertically */
+}
+
+/* Styling for input fields */
+.main-container input[type="text"],
+.main-container input[type="password"],
+.main-container input[type="email"]{
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px;
+}
+
+.main-container h1 {
+    color: #ff6600; /* Orange color for the heading */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+/* Styling for the button to submit the form */
+.main-container button {
+    background-color: #ff6600; /* Orange background color */
+    color: #ffffff; /* White text color */
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.main-container h1 {
+    color: #ff6600; /* Orange color for the heading */
+    margin-bottom: 20px; /* Space below the heading */
+}
