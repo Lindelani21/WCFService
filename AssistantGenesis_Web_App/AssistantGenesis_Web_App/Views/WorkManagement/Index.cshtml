@@ -1,101 +1,10 @@
 ﻿@{
     ViewData["Title"] = "WorkManagement Page";
 }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
-            color: #333333;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Container for all content */
-        .container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .header h1 {
-            margin: 0; /* Remove default margin */
-			color: #ff6600; /* Orange color for the heading */
-        }
-
-        /* Main content area */
-        .content {
-            flex: 1; /* Expand to fill the available space */
-            padding: 20px; /* Padding inside the content area */
-            margin-top: 20px; /* Space above the content */
-        }
-
-        /* Search box styling */
-        .search-box {
-            display: flex;
-            justify-content: center; /* Center align the search box */
-            margin-bottom: 20px; /* Space below the search box */
-        }
-
-        .search-box input {
-            width: 50%; /* Width of the input field */
-            padding: 10px; /* Padding inside the input field */
-            border: 1px solid #ccc; /* Light gray border */
-            border-radius: 5px 0 0 5px; /* Rounded left corners */
-        }
-
-        .search-box button {
-            padding: 10px; /* Padding inside the button */
-            border: 1px solid #ccc; /* Light gray border */
-            background-color: #ff6600; /* Orange background color */
-            color: #ffffff; /* White text color */
-            border-radius: 0 5px 5px 0; /* Rounded right corners */
-            cursor: pointer; /* Pointer cursor on hover */
-        }
-
-        /* Assistant details block styling */
-        .assistant-details {
-            background-color: #f8f9fa; /* Light gray background */
-            padding: 20px; /* Padding inside the block */
-            border-radius: 5px; /* Rounded corners */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
-            margin-bottom: 20px; /* Space below the block */
-        }
-
-        /* Task assignment block styling */
-        .task-assign {
-            display: flex;
-            flex-direction: column;
-            gap: 10px; /* Space between elements */
-        }
-
-        .task-assign select, .task-assign input, .task-assign button {
-            padding: 10px; /* Padding inside the elements */
-            border: 1px solid #ccc; /* Light gray border */
-            border-radius: 5px; /* Rounded corners */
-            margin-right: 10px; /* Right margin */
-        }
-
-        .task-assign button {
-            background-color: #ff6600; /* Orange background color */
-            color: #ffffff; /* White text color */
-            border: none; /* No border */
-            cursor: pointer; /* Pointer cursor on hover */
-        }
-
-        }
-    </style>
-</head>
-<body>
     <div class="container">
         <!-- Header Section -->
         <div class="header">
-            <h1 class="text-notice-me">Work Management</h1>
+            <h1>Work Management</h1>
         </div>
         <!-- Main Content Area -->
         <div class="content">
@@ -125,5 +34,3 @@
             </div>
         </div>
     </div>
-</body>
-</html>

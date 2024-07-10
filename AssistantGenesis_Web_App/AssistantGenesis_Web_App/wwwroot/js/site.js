@@ -1,4 +1,17 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function toggleTaskDetails(assistantId) {
+    var taskDetails = document.getElementById(assistantId + '-tasks');
+    if (taskDetails.style.display === 'none' || taskDetails.style.display === '') {
+        taskDetails.style.display = 'block';
+    } else {
+        taskDetails.style.display = 'none';
+    }
+}
 
-// Write your JavaScript code.
+function provideGuidance(assistantId) {
+    var feedback = document.getElementById('feedback-' + assistantId).value;
+    alert('Guidance provided for ' + assistantId + ' with feedback: ' + feedback);
+}
+
+function goBack() {
+    window.history.back();
+}
