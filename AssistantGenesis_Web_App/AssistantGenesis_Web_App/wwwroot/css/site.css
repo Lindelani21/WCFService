@@ -17,10 +17,6 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
-}
-
 /* This is the general styling for the body */
 body {
     font-family: Arial, sans-serif;
@@ -28,38 +24,45 @@ body {
     color: #333333;
     margin: 0;
     padding: 0;
+    margin-bottom: 60px;
 }
-/* Container for the sidebar and main content on the home page*/
-/*.container {
+.main-content {
     display: flex;
-    height: 100vh;
-}*/
+    width: 100%;
+}
 /* Styling for links inside the sidebar */
 .sidebar {
-    background-color: #ff6600;
+    background-color: #f8f9fa;
     width: 250px;
     padding: 20px;
-    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
     .sidebar a {
         color: #ffffff;
         text-decoration: none;
         display: block;
         margin: 10px 0;
     }
+    .sidebar select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
 /* styling the main content area  */
 .content {
     flex: 1;
     padding: 20px;
-    background-color: #f8f9fa;
 }
 /* Header inside the content area */
 .header {
-    background-color: #333333;
-    color: #ffffff;
     padding: 10px 20px;
+    width: 100%;
     text-align: center;
+    background-color: #ff6600;
+    color: #ffffff;
+    padding: 20px;
 }
 
 /*These are the drop down menus in the main content*/
@@ -87,3 +90,138 @@ body {
 .text-notice-me {
     color: #ff6600;
 }
+.search-box {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+    .search-box input {
+        width: 50%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .search-box button {
+        padding: 10px; /* Padding inside the button */
+        border: 1px solid #ccc; /* Light gray border */
+        background-color: #ff6600; /* Orange background color */
+        color: #ffffff; /* White text color */
+        border-radius: 0 5px 5px 0; /* Rounded right corners */
+        cursor: pointer; /* Pointer cursor on hover */
+    }
+.assistant-list {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.assistant-details {
+    background-color: #f8f9fa; /* Light gray background */
+    padding: 20px; /* Padding inside the block */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
+    margin-bottom: 20px; /* Space below the block */
+}
+    .assistant-list h3 {
+        color: #ff6600;
+    }
+
+.assistant-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+    .assistant-item:last-child {
+        border-bottom: none;
+    }
+
+    .assistant-item h4 {
+        margin: 0;
+        color: #333333;
+    }
+
+.progress-btn {
+    background-color: #ff6600;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.task-details {
+    margin-top: 10px;
+}
+
+.feedback-box {
+    margin-top: 10px;
+}
+
+    .feedback-box textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+.buttons {
+    margin-top: 10px;
+}
+
+    .buttons button {
+        background-color: #ff6600;
+        color: #ffffff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .buttons .back {
+        background-color: #333333;
+    }
+/* Task assignment block styling */
+.task-assign {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between elements */
+}
+
+    .task-assign select, .task-assign input, .task-assign button {
+        padding: 10px; /* Padding inside the elements */
+        border: 1px solid #ccc; /* Light gray border */
+        border-radius: 5px; /* Rounded corners */
+        margin-right: 10px; /* Right margin */
+    }
+
+    .task-assign button {
+        background-color: #ff6600; /* Orange background color */
+        color: #ffffff; /* White text color */
+        border: none; /* No border */
+        cursor: pointer; /* Pointer cursor on hover */
+    }
+/* Task assignment block styling */
+.task-assign {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between elements */
+}
+
+    .task-assign select, .task-assign input, .task-assign button {
+        padding: 10px; /* Padding inside the elements */
+        border: 1px solid #ccc; /* Light gray border */
+        border-radius: 5px; /* Rounded corners */
+        margin-right: 10px; /* Right margin */
+    }
+
+    .task-assign button {
+        background-color: #ff6600; /* Orange background color */
+        color: #ffffff; /* White text color */
+        border: none; /* No border */
+        cursor: pointer; /* Pointer cursor on hover */
+    }
