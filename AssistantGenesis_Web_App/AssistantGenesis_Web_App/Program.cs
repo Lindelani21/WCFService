@@ -7,7 +7,12 @@ namespace AssistantGenesis_Web_App
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddSession(options => {
+                                        options.Cookie.Name = ".AssistantGenesis.Session"; 
+                                        options.Cookie.IsEssential = true;
+                                        options.IdleTimeout = TimeSpan.FromMinutes(5);})
+                            .AddDistributedMemoryCache()
+                            .AddControllersWithViews();
 
             var app = builder.Build();
 
@@ -25,6 +30,8 @@ namespace AssistantGenesis_Web_App
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
