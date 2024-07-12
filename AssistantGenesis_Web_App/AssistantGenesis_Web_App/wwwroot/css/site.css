@@ -1,4 +1,36 @@
-/*html {
+.bg-notice-me {
+    background-color: #ff6600;
+}
+
+.text-notice-me {
+    color: #ff6600;
+}
+
+.border-gray {
+    background-color: #f8f9fa;
+    box-shadow: 0px 2px 4px 0px #333;
+    padding: 20px;
+}
+.ag-dropdown {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.button{
+    background-color: #ff6600;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.back-button{
+    background-color: #333333;
+}
+html {
   font-size: 14px;
 }
 
@@ -19,7 +51,18 @@ html {
 
 body {
   margin-bottom: 60px;
-}*/
+}
+.feedback-box textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.screen-boundary{
+    max-height: 100%;
+    max-width: 100%;
+}
 
 /* This is the general styling for the body */
 /*body {
@@ -169,12 +212,7 @@ body {
     margin-top: 10px;
 }
 
-    .feedback-box textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
+  
 .buttons {
     margin-top: 10px;
 }
@@ -282,16 +320,3 @@ body {
     /*margin-bottom: 20px;*/ /* Space below the heading */
 /*}*/
 
-.bg-notice-me {
-    background-color: #ff6600;
-}
-
-.text-notice-me {
-    color: #ff6600;
-}
-
-.border-gray {
-    background-color: #f8f9fa;
-    box-shadow: 0px 2px 4px 0px #333;
-    padding: 20px;
-}
