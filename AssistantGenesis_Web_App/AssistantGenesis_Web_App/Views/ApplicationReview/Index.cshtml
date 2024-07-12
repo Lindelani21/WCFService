@@ -9,14 +9,14 @@
         <!--This will contain the whole side bar-->
         <div class="col-4">
             @{
-                string[] statuses = {"Pending", "Processing", "Processsed"};
+                string[] statuses = {"Applications", "Pending", "Processing", "Processsed"};
 
                 @foreach (string status in statuses)
                 {
                     <div class="row m-1">
                         <div class="col">
-                            <button type="button" class="btn bg-notice-me dropdown-toggle w-100 @(status != statuses[0]?"collapsed":"")" data-bs-toggle="collapse"
-                                    data-bs-target="@($"#{status}Application")" aria-controls="@($"{status}Application")" aria-expanded="@(status == statuses[0]?"true":"false")">
+                            <button type="button" class="btn bg-notice-me dropdown-toggle w-100 @(status != statuses[1]?"collapsed":"")" data-bs-toggle="collapse"
+                                    data-bs-target="@($"#{status}Application")" aria-controls="@($"{status}Application")" aria-expanded="@(status == statuses[1]?"true":"false")">
                                 @status
                             </button>
 

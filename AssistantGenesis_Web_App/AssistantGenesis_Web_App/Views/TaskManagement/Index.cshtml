@@ -1,25 +1,25 @@
 ﻿@{
     ViewData["Title"] = "TaskManagement Page";
 }
-<div class="container">
-    <div class="header">
+<div class="container border-gray">
+    <div class="text-center bg-notice-me p-3 text-white">
         <h1>Task Progress</h1>
     </div>
 
-    <div class="search-box">
-        <input type="text" placeholder="Search assistant by username">
-        <button>Search</button>
+    <div class="input-group my-4 w-100" style="padding:20px">
+        <input type="text" class="form-control" placeholder="Search Assistant By Student Number"/>
+        <button type="button" class="input-group-text bg-notice-me">Search</button>
     </div>
 
-    <div class="main-content">
-    <div class="sidebar">
+    <div class="row">
+    <div class="col-4 col-lg-2 border-gray">
         <h3>Filter by:</h3>
-        <select>
+        <select class="btn">
             <option value="">Select Module</option>
             <option value="module1">Module 1</option>
             <option value="module2">Module 2</option>
         </select>
-        <select>
+        <select class="btn">
             <option value="">Select Task</option>
             <option value="marking">Marking</option>
             <option value="invigilating">Invigilating</option>
@@ -27,7 +27,7 @@
         </select>
     </div>
 
-    <div class="content">
+    <div class="col mx-2 border-gray bg-white">
     <div class="assistant-list">
         <h3>Assistants</h3>
         <div class="assistant-item">
@@ -52,5 +52,5 @@
         </div>
     </div>
 </div>
-</html>
+
 
