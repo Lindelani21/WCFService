@@ -1,5 +1,5 @@
 
-using RESTful_Web_API.Models;
+using RESTful_Web_API.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
