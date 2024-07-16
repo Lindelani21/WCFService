@@ -1,21 +1,20 @@
 ﻿@{
     ViewData["Title"] = "WorkManagement Page";
 }
-
-<div class="row">
-    <div class="col"></div>
-    <div class="col-md-8 col-sm-12 col-lg-6 container">
+<div class="row" class="container w-100">
+    <div class="col container px-5 px-5">
         <!-- Header Section -->
-        <div class="header">
-            <h1 class="text-notice-me">Work Management</h1>
+        <div class="text-center bg-notice-me p-3 text-white">
+            <h1>Work Management</h1>
         </div>
         <!-- Main Content Area -->
-        <div class="content">
+        <div class="content"  >
             <!-- Search Box -->
-            <div class="search-box">
-                <input type="text" placeholder="Enter assistant's username">
-                <button>Search</button>
+            <div class="input-group my-2 w-50" style="padding:20px;justify-content:center;align-items:center"">
+                <input type="text" class="form-control" placeholder="Search Assistant By Student Number" />
+                <button type="button" class="input-group-text bg-notice-me text-white">Search</button>
             </div>
+            
 
             <!-- Assistant Details Block -->
             <div class="assistant-details">
@@ -37,6 +36,5 @@
             </div>
         </div>
     </div>
-    <div class="col"></div>
 </div>
     
