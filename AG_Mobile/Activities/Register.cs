@@ -4,6 +4,7 @@ using Android.App;
 using Android.OS;
 using Android.Runtime;
 using Android.Widget;
+using System;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -15,7 +16,6 @@ namespace AG_Mobile.Activities
     public class Register : Activity
     {
         private Button btnRegister;
-        private string message;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -24,13 +24,9 @@ namespace AG_Mobile.Activities
             SetContentView(Resource.Layout.register);
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
-            Thread loginThread = new Thread(onBtnRegisterClicked) { IsBackground = true };
 
             btnRegister = FindViewById<Button>(Resource.Id.btnRegister);
-            btnRegister.Click += delegate
-            {
-                loginThread.Start();
-            };
+            btnRegister.Click += delegate { onBtnRegisterClicked(); };
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -39,7 +35,7 @@ namespace AG_Mobile.Activities
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        protected void onBtnRegisterClicked()
+        protected async void onBtnRegisterClicked()
         {
             string name = FindViewById<AutoCompleteTextView>(Resource.Id.txtName).Text;
             string surname = FindViewById<AutoCompleteTextView>(Resource.Id.txtSurname).Text;
@@ -48,9 +44,9 @@ namespace AG_Mobile.Activities
             string password = FindViewById<AutoCompleteTextView>(Resource.Id.txtPassword).Text;
             string passwordC = FindViewById<AutoCompleteTextView>(Resource.Id.txtPasswordC).Text;
 
-            if(!password.Equals(passwordC))
+            if(!password.Equals(passwordC) && !string.IsNullOrEmpty(password))
             {
-                Toast.MakeText(this, "Passwords do not match!", ToastLength.Long);
+                RunOnUiThread(() => { Toast.MakeText(this, "Passwords do not match!", ToastLength.Long); });
                 FindViewById<AutoCompleteTextView>(Resource.Id.txtPassword).Text = string.Empty;
                 FindViewById<AutoCompleteTextView>(Resource.Id.txtPasswordC).Text = string.Empty;
                 return;
@@ -65,8 +61,9 @@ namespace AG_Mobile.Activities
                 Password = Secrecy.HashPassword(password)
             };
 
-            if(RESTfulClient.Instance.POST("Users", user))
+            if(await RESTfulClient.Instance.Post_Async("Users", user))
             {
+                Console.WriteLine(RESTfulClient.Instance.Message);
                 RunOnUiThread(() => { Toast.MakeText(this, "You have registered successfuly!", ToastLength.Long).Show(); });
                 this.Redirect(typeof(Home));
             }

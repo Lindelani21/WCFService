@@ -27,7 +27,6 @@ namespace AssistantGenesis_Web_App.Controllers
             {
                 //user should be stored in a session variable 
                 TempData["msg"] = "Welcome";
-
             }
             else
             {
@@ -51,6 +50,7 @@ namespace AssistantGenesis_Web_App.Controllers
 
             TempData["msg"] = "You were succesfuly logged in";
             TempData["success"] = true;
+            HttpContext.Session.Set("User",user);
 
             return View();
         }

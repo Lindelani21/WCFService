@@ -64,9 +64,9 @@
             android:id="@+id/btnLogin"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:background="#FFA500"
             android:text="Log In"
-            style="@style/OrangeButton"/>
+            android:elevation="9dp"
+            style="@style/btnNoticeMe"/>
 
         <TextView
             android:layout_width="match_parent"

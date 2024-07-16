@@ -2,15 +2,11 @@
 using AG_Mobile.Utilities;
 using Android.App;
 using Android.Content;
-using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
-using Android.Views;
 using Android.Widget;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 
 namespace AG_Mobile.Activities
@@ -19,7 +15,6 @@ namespace AG_Mobile.Activities
     public class Login : Activity
     {
         private Button btnLogin;
-        private string message;
 
         ISharedPreferences sharedPrefs;
         ISharedPreferencesEditor editor;
@@ -81,10 +76,18 @@ namespace AG_Mobile.Activities
 
             if (user != null)
             {
-                editor.PutInt("Id", user.Id);
-                editor.PutString("Name", user.Name);
-                editor.PutString("Surname", user.Surname);
-                editor.PutString("Role", user.Role);
+                if (user.Role.ToLower() != "student" && user.Role.ToLower() != "assistant")
+                {
+                    RunOnUiThread(() =>
+                    {
+                        Toast.MakeText(this, $"This is no place for {user.Role}s XD", ToastLength.Long).Show();
+                    });
+                    return;
+                }
+
+                string jsonObj = JsonConvert.SerializeObject(user);
+
+                editor.PutString("User", jsonObj);
 
                 editor.Apply();
 
