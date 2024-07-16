@@ -1,0 +1,182 @@
+Redesigned
+
+CREATE TABLE [dbo].[User]
+(
+    [UserId] INT NOT NULL IDENTITY(100,1) PRIMARY KEY, 
+    [Username] VARCHAR(25) NOT NULL, 
+    [Password] VARCHAR(25) NOT NULL, 
+    [UserType] INT NOT NULL, 
+    [IsActive] INT NOT NULL,
+
+)
+
+CREATE TABLE [dbo].[Application]
+(
+    [ApplicationId] INT NOT NULL IDENTITY(100,1) PRIMARY KEY, 
+    [Title] VARCHAR(3) NOT NULL, 
+    [Surname] VARCHAR(20) NOT NULL, 
+    [Name] VARCHAR(15) NOT NULL, 
+    [PreferredRole] INT NOT NULL, 
+    [TimeStamp] TIME NOT NULL, 
+    [PreferredModule] INT NOT NULL, 
+    [YearOfStudy] INT NOT NULL, 
+    [AcadenicRec] VARCHAR(255) NOT NULL, 
+    [ApplicationStatus] VARCHAR(15) NOT NULL, 
+    [Contract] VARCHAR(255) NOT NULL, 
+    [CSC1A] INT NOT NULL, 
+    [CSC1B] INT NOT NULL, 
+    [CSC2A] INT NOT NULL,
+    [CSC2B] INT NOT NULL, 
+    [CSC3A] INT NOT NULL, 
+    [CSC3B] INT NOT NULL,
+    [IFM1A] INT NOT NULL, 
+    [IFM1B] INT NOT NULL,
+    [IFM2A] INT NOT NULL, 
+    [IFM2B] INT NOT NULL,
+    [IFM3A] INT NOT NULL, 
+    [IFM3B] INT NOT NULL,
+    [IFM100] INT NOT NULL,	
+)
+
+CREATE TABLE [dbo].[Student]
+(
+    [StudentId] INT NOT NULL IDENTITY(100,1) PRIMARY KEY, 
+    [StudentNum] VARCHAR(8) NOT NULL, 
+    [Email] VARCHAR(35) NOT NULL, 
+    [EmployeeStatus] VARCHAR(15) NOT NULL, 
+    [ApplicationId] INT NOT NULL, 
+    [UserId] INT NOT NULL
+    FOREIGN KEY (UserId) REFERENCES [dbo].[User](UserId),
+    FOREIGN KEY (ApplicationId) REFERENCES [dbo].[Application](ApplicationId)
+
+)
+
+CREATE TABLE [dbo].[Lecturer]
+(
+    [LecturerId] INT NOT NULL IDENTITY(300,1) PRIMARY KEY, 
+    [StaffId] INT NOT NULL, 
+    [OfficeNum] VARCHAR(55) NOT NULL,
+    [UserId] INT NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES [dbo].[User](UserId),
+
+)
+
+CREATE TABLE [dbo].[Admin]
+(
+    [AdminId] INT NOT NULL IDENTITY(200,1) PRIMARY KEY, 
+    [StaffId] INT NOT NULL, 
+    [UserId] INT NOT NULL,
+    FOREIGN KEY (UserId) REFERENCES [dbo].[User](UserId),
+)
+
+CREATE TABLE [dbo].[Assistant]
+(
+    [AssistantId] INT NOT NULL IDENTITY(100,1) PRIMARY KEY, 
+    [StudentId] INT NOT NULL, 
+    [AssitantType] INT NOT NULL,
+    FOREIGN KEY (StudentId) REFERENCES [dbo].[Student](StudentId)
+)
+
+CREATE TABLE [dbo].[Task] (
+    [TaskId]          INT           IDENTITY (100, 1) NOT NULL,
+    [TaskName]        VARCHAR (20)  NOT NULL,
+    [TaskDescription] VARCHAR (255) NOT NULL,
+    [AssistantType]   INT           NOT NULL,
+    [Deadline]        DATETIME      NOT NULL,
+    [PriorityLevel]   VARCHAR (15)  NOT NULL,
+    PRIMARY KEY CLUSTERED ([TaskId] ASC)
+);
+
+CREATE TABLE [dbo].[AssitantTask]
+(
+    [AssitantTaskId] INT NOT NULL IDENTITY(10,1) PRIMARY KEY, 
+    [AssistantId] INT NOT NULL, 
+    [TaskId] INT NOT NULL,
+    FOREIGN KEY (AssistantId) REFERENCES [dbo].[Assistant](AssistantId),
+    FOREIGN KEY (TaskId) REFERENCES [dbo].[Task](TaskId)
+
+)
+
+CREATE TABLE [dbo].[LecturerTask]
+(
+    [LecturerTaskId] INT NOT NULL IDENTITY(10,1) PRIMARY KEY, 
+    [LecturerId] INT NOT NULL, 
+    [TaskId] INT NOT NULL,
+    FOREIGN KEY (LecturerId) REFERENCES [dbo].[Lecturer](LecturerId),
+    FOREIGN KEY (TaskId) REFERENCES [dbo].[Task](TaskId)
+)
+
+CREATE TABLE [dbo].[Attendance]
+(
+    [AttendanceId] INT NOT NULL IDENTITY (100, 1) PRIMARY KEY, 
+    [Date] DATE NOT NULL, 
+    [AllocatedTime] INT NOT NULL, 
+    [TimeIn] TIME NOT NULL, 
+    [TimeOut] TIME NOT NULL, 
+    [AssistantId] INT NULL,
+    FOREIGN KEY (AssistantId) REFERENCES [dbo].[Assistant](AssistantId)
+)
+
+CREATE TABLE [dbo].[Module]
+(
+    [ModuleId] INT NOT NULL IDENTITY (100, 1) PRIMARY KEY, 
+    [ModuleCode] VARCHAR(6) NOT NULL, 
+    [ModuleName] VARCHAR(25) NOT NULL
+)
+
+REATE TABLE [dbo].[TaskModule]
+(
+    [TaskModuleId] INT NOT NULL IDENTITY(10,1) PRIMARY KEY, 
+    [TaskId] INT NOT NULL, 
+    [ModuleId] INT NOT NULL,
+    FOREIGN KEY (ModuleId) REFERENCES [dbo].[Module](ModuleId),
+    FOREIGN KEY (TaskId) REFERENCES [dbo].[Task](TaskId)
+)
+
+CREATE TABLE [dbo].[ApplicationModule]
+(
+    [ApplicationModuleId] INT NOT NULL PRIMARY KEY, 
+    [ApplicationId] INT NOT NULL, 
+    [ModuleId] INT NOT NULL,
+    FOREIGN KEY (ModuleId) REFERENCES [dbo].[Module](ModuleId),
+    FOREIGN KEY (ApplicationId) REFERENCES [dbo].[Application](ApplicationId)
+)
+
+CREATE TABLE [dbo].[AssistantModule]
+(
+    [AssistantModuleId] INT NOT NULL PRIMARY KEY, 
+    [AssistantId] INT NOT NULL, 
+    [ModuleId] INT NOT NULL,
+    FOREIGN KEY (ModuleId) REFERENCES [dbo].[Module](ModuleId),
+    FOREIGN KEY (AssistantId) REFERENCES [dbo].[Assistant](AssistantId)
+)
+
+CREATE TABLE [dbo].[LecturerModule]
+(
+    [LecturerModuleId] INT NOT NULL PRIMARY KEY, 
+    [LecturerId] INT NOT NULL, 
+    [ModuleId] INT NOT NULL,
+    FOREIGN KEY (ModuleId) REFERENCES [dbo].[Module](ModuleId),
+    FOREIGN KEY (LecturerId) REFERENCES [dbo].[Lecturer](LecturerId)
+)
+
+CREATE TABLE [dbo].[Notification]
+(
+    [NotificationId] INT NOT NULL IDENTITY(100,1) PRIMARY KEY, 
+    [NotificationContent] VARCHAR(500) NOT NULL, 
+    
+)
+
+CREATE TABLE [dbo].[UserNotification]
+(
+    [UserNotificationId] INT NOT NULL IDENTITY(10,1) PRIMARY KEY, 
+    [NotificationId] INT NOT NULL, 
+    [UserId] INT NOT NULL,
+    FOREIGN KEY (NotificationId) REFERENCES [dbo].[Notification](NotificationId),
+    FOREIGN KEY (UserId) REFERENCES [dbo].[User](UserId)
+)
+
+
+
+
+
