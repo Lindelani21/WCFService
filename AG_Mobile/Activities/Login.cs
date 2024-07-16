@@ -1,26 +1,20 @@
 ﻿using AG_Mobile.Models;
+using AG_Mobile.Utilities;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading;
 
-namespace AG_Mobile
+namespace AG_Mobile.Activities
 {
     [Activity(Label = "Login")]
     public class Login : Activity
     {
         private Button btnLogin;
-        private string message;
 
         ISharedPreferences sharedPrefs;
         ISharedPreferencesEditor editor;
@@ -32,24 +26,31 @@ namespace AG_Mobile
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.login);
 
+            // Set logo image
+            ImageView imgLogo = FindViewById<ImageView>(Resource.Id.imgLogo);
+            imgLogo.SetImageBitmap(this.GetImageAsset("ag_logo"));
+
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
             sharedPrefs = GetSharedPreferences("User", FileCreationMode.Private);
             editor = sharedPrefs.Edit();
 
-            Thread loginThread = new Thread(onBtnLoginClicked) { IsBackground = true };
+            //Thread loginThread = new Thread(onBtnLoginClicked) { IsBackground = true };
 
             btnLogin = FindViewById<Button>(Resource.Id.btnLogin);
             btnLogin.Click += delegate
             {
-               if (loginThread.ThreadState != ThreadState.Running)
-                    loginThread.Start();
-               else
-                {
-                    loginThread.Abort();
-                    loginThread.Start();
-                }
+                onBtnLoginClicked();
             };
+            //{
+            //   if (loginThread.ThreadState != ThreadState.Running)
+            //        loginThread.Start();
+            //   else
+            //    {
+            //        loginThread.Abort();
+            //        loginThread.Start();
+            //    }
+            //};
 
             lnkRegister = FindViewById<TextView>(Resource.Id.lnkRegister);
             lnkRegister.Click += delegate { this.Redirect(typeof(Register)); };
@@ -61,26 +62,36 @@ namespace AG_Mobile
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        protected void onBtnLoginClicked()
+        protected async void onBtnLoginClicked()
         {
             string username = FindViewById<AutoCompleteTextView>(Resource.Id.txtUsername).Text;
             string password = Secrecy.HashPassword(FindViewById<AutoCompleteTextView>(Resource.Id.txtPassword).Text);
 
             RESTfulClient client = RESTfulClient.Instance;
 
-            User user = client.GET<User>($"Users/user={username}&key={password}");
+            //User user = client.GET<User>($"Users/user={username}&key={password}");
+            User user = await client.GET_Async<User>($"Users/user={username}&key={password}");
+
             RunOnUiThread(() => { Toast.MakeText(BaseContext, client.Message, ToastLength.Long).Show(); });
 
             if (user != null)
             {
-                editor.PutInt("Id", user.Id);
-                editor.PutString("Name", user.Name);
-                editor.PutString("Surname", user.Surname);
-                editor.PutString("Role", user.Role);
+                if (user.Role.ToLower() != "student" && user.Role.ToLower() != "assistant")
+                {
+                    RunOnUiThread(() =>
+                    {
+                        Toast.MakeText(this, $"This is no place for {user.Role}s XD", ToastLength.Long).Show();
+                    });
+                    return;
+                }
+
+                string jsonObj = JsonConvert.SerializeObject(user);
+
+                editor.PutString("User", jsonObj);
 
                 editor.Apply();
 
-                RunOnUiThread(new Action(() => { Toast.MakeText(this, "You have successful logged in!", ToastLength.Long).Show(); this.Redirect(typeof(MainActivity)); }));
+                RunOnUiThread(new Action(() => { Toast.MakeText(this, "You have successful logged in!", ToastLength.Long).Show(); this.Redirect(typeof(Home)); }));
             }
             else
                 RunOnUiThread( () => { Toast.MakeText(this, "Your login was unsuccessful! Make sure your credentials are correct.", ToastLength.Long).Show(); });

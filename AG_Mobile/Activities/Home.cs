@@ -6,32 +6,36 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
 using System.Net;
+using AG_Mobile.Utilities;
+using System.IO;
+using Android.Graphics;
 using AG_Mobile.Models;
+using Newtonsoft.Json;
 
-namespace AG_Mobile
+namespace AG_Mobile.Activities
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity
+    [Activity(Label = "@string/app_name", MainLauncher = true)]
+    public class Home : AppCompatActivity
     {
-        ISharedPreferences sharedPrefs;
-
         protected Button loginTab;
         protected Button logoutTab;
         protected Button applicationTab;
         protected Button profileTab;
+        private User user;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            SetContentView(Resource.Layout.activity_main);
-
+            SetContentView(Resource.Layout.home);
+         
             ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
 
             RESTfulClient.InitializeClent(Resources.GetString(Resource.String.base_url));
 
             // This is like the session thingie
-            sharedPrefs = GetSharedPreferences("User", FileCreationMode.Private);
+            string jsonObj = GetSharedPreferences("User", FileCreationMode.Private).GetString("User", null);
+            user = string.IsNullOrEmpty(jsonObj) ? null : JsonConvert.DeserializeObject<User>(jsonObj);
 
             loginTab = FindViewById<Button>(Resource.Id.loginTab);
             logoutTab = FindViewById<Button>(Resource.Id.logoutTab);
@@ -41,9 +45,9 @@ namespace AG_Mobile
 
             // This is self explainatory
             loginTab.Click += delegate { this.Redirect(typeof(Login)); };   // Function is in models -> ActivityExtensions. This is what needs fixing
-            logoutTab.Click += delegate { this.DeleteSharedPreferences("User"); this.RunOnUiThread(() => { UpdateViews(); }); };
+            logoutTab.Click += delegate { this.DeleteSharedPreferences("User"); this.Redirect(typeof(Login)); };
             profileTab.Click += delegate { };
-            applicationTab.Click += delegate { };
+            applicationTab.Click += delegate { this.Redirect(typeof(Application)); };
         }
 
         /// <summary>
@@ -51,14 +55,12 @@ namespace AG_Mobile
         /// </summary>
         private void UpdateViews()
         {
-            if (sharedPrefs.All.Count != 0)
+            if (user != null)
             {
                 logoutTab.Visibility = ViewStates.Visible;
                 profileTab.Visibility = ViewStates.Visible;
 
-                string role = sharedPrefs.GetString("Role", string.Empty);
-
-                switch (role)
+                switch (user.Role.ToLower())
                 {
                     case "student":
                         applicationTab.Visibility = ViewStates.Visible;
@@ -66,9 +68,6 @@ namespace AG_Mobile
                     case "assistant":
                         break;
                     default:
-                        if(!string.IsNullOrEmpty(role))
-                            Toast.MakeText(this, $"This is no place for {role}s XD", ToastLength.Long).Show();
-
                         loginTab.Visibility = ViewStates.Visible;
                         logoutTab.Visibility= ViewStates.Gone;
                         profileTab.Visibility = ViewStates.Gone;
@@ -78,7 +77,7 @@ namespace AG_Mobile
                 }
             }
             else
-                loginTab.Visibility = ViewStates.Visible;
+                this.Redirect(typeof(Login));
         }
 
         // I don't remember what this is

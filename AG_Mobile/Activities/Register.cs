@@ -1,4 +1,5 @@
 ﻿using AG_Mobile.Models;
+using AG_Mobile.Utilities;
 using Android.App;
 using Android.OS;
 using Android.Runtime;
@@ -8,13 +9,12 @@ using System.Net;
 using System.Text;
 using System.Threading;
 
-namespace AG_Mobile
+namespace AG_Mobile.Activities
 {
-    [Activity(Label = "Activity1")]
+    [Activity(Label = "Register")]
     public class Register : Activity
     {
         private Button btnRegister;
-        private string message;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -49,7 +49,7 @@ namespace AG_Mobile
 
             if(!password.Equals(passwordC))
             {
-                Toast.MakeText(this, "Passwords do not match!", ToastLength.Long);
+                RunOnUiThread(() => { Toast.MakeText(this, "Passwords do not match!", ToastLength.Long); });
                 FindViewById<AutoCompleteTextView>(Resource.Id.txtPassword).Text = string.Empty;
                 FindViewById<AutoCompleteTextView>(Resource.Id.txtPasswordC).Text = string.Empty;
                 return;
@@ -67,7 +67,7 @@ namespace AG_Mobile
             if(RESTfulClient.Instance.POST("Users", user))
             {
                 RunOnUiThread(() => { Toast.MakeText(this, "You have registered successfuly!", ToastLength.Long).Show(); });
-                this.Redirect(typeof(MainActivity));
+                this.Redirect(typeof(Home));
             }
                 
         }

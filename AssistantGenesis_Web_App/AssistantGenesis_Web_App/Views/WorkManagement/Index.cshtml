@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "WorkManagement Page";
+}
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col-md-8 col-sm-12 col-lg-6 container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1 class="text-notice-me">Work Management</h1>
+        </div>
+        <!-- Main Content Area -->
+        <div class="content">
+            <!-- Search Box -->
+            <div class="search-box">
+                <input type="text" placeholder="Enter assistant's username">
+                <button>Search</button>
+            </div>
+
+            <!-- Assistant Details Block -->
+            <div class="assistant-details">
+                <h2>Assistant Details</h2>
+                <p>Role: <span id="role">N/A</span></p>
+                <p>Name: <span id="name">N/A</span></p>
+            </div>
+
+            <!-- Task Assignment Block -->
+            <div class="task-assign">
+                <select>
+                    <option value="tutoring">Tutoring</option>
+                    <option value="invigilating">Invigilating</option>
+                    <option value="marking">Marking</option>
+                </select>
+                <input type="number" placeholder="Assign hours">
+                <input type="date">
+                <button>Assign</button>
+            </div>
+        </div>
+    </div>
+    <div class="col"></div>
+</div>
+    

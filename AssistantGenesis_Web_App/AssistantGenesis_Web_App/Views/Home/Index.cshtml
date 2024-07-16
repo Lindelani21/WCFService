@@ -2,11 +2,38 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p> I can code , YAY !</p>
-    <p>I'm sure I can code, For reallll</p>
-    <p> We can Yebo!!</p>
-    <p>Hello</p>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container">
+    @* <!-- Sidebar with navigation links -->
+    <div class="sidebar">
+        <h2>Navigation</h2>
+        <a href="#">Home</a>
+        <a href="#">Notifications</a>
+        <a href="#">Applications</a>
+        <a href="#">User Management</a>
+        <a href="#">Modules</a>
+    </div> *@
+    <!-- Main content area -->
+    <div class="content">
+        <div class="header">
+            <!-- Header section -->
+            <h1>Welcome to Assistant Genesis</h1>
+            <span id="user"></span>
+        </div>
+        <div class="card">
+            <h2>Overview</h2>
+            <p>Welcome to the Assistant Genesis portal. Here, lecturers and administrators can manage assistant assignments, applications, and more. Use the navigation links to access different sections of the site.</p>
+        </div>
+        <!-- Recent Notifications card -->
+        <div class="card">
+            <h2>Recent Notifications</h2>
+            <p>No new notifications.</p>
+        </div>
+        <!-- Recent Applications card -->
+        <div class="card">
+            <h2>Recent Applications</h2>
+            <p>No new applications.</p>
+        </div>
+    </div>
 </div>
+
+

@@ -11,10 +11,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
-namespace AG_Mobile.Models
+namespace AG_Mobile.Utilities
 {
     public class RESTfulClient
     {
@@ -85,6 +87,8 @@ namespace AG_Mobile.Models
 
                     message = "API call was successful";
 
+                    response.Close();
+
                     // Use Json object
                     return JsonConvert.DeserializeObject<T>(JsonObj);
 
@@ -101,6 +105,29 @@ namespace AG_Mobile.Models
             }
 
             return default;
+        }
+
+        public async Task<T> GET_Async<T>(string directive)
+        {
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            httpClientHandler.ServerCertificateCustomValidationCallback += delegate { return true; };
+
+            HttpClient httpClient = new HttpClient(httpClientHandler);
+
+            HttpResponseMessage httpResponse = await httpClient.GetAsync($"{baseURL}{directive}");
+
+            try
+            {
+                httpResponse.EnsureSuccessStatusCode();
+            }
+            catch (Exception ex)
+            {
+                return default;
+            }
+
+            string jsonObj = await httpResponse.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<T>(jsonObj);
         }
 
         /// <summary>

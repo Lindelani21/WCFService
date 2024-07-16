@@ -6,15 +6,19 @@ namespace AssistantGenesis_Web_App.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
 
         public IActionResult Index()
         {
+            User? user = HttpContext.Session.IsAvailable?HttpContext.Session.Get<User>("User"):null;
+
+            if (user == null)
+            {
+                string message = "You are currently not logged in.";
+                return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier, Message = message });
+            }
+
+            ViewData["User"] = user;
+
             return View();
         }
 

@@ -1,7 +1,8 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-
+namespace AG_Mobile.Utilities
+{
     public static class Secrecy
     {
         public static string HashPassword(string password)
@@ -17,3 +18,4 @@ using System.Text;
             return hashedPassword;
         }
     }
+}
