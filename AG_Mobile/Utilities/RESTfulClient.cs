@@ -115,7 +115,15 @@ namespace AG_Mobile.Utilities
             HttpClient httpClient = new HttpClient(httpClientHandler);
 
             HttpResponseMessage httpResponse = await httpClient.GetAsync($"{baseURL}{directive}");
-            httpResponse.EnsureSuccessStatusCode();
+
+            try
+            {
+                httpResponse.EnsureSuccessStatusCode();
+            }
+            catch (Exception ex)
+            {
+                return default;
+            }
 
             string jsonObj = await httpResponse.Content.ReadAsStringAsync();
 

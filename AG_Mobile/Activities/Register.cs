@@ -15,7 +15,6 @@ namespace AG_Mobile.Activities
     public class Register : Activity
     {
         private Button btnRegister;
-        private string message;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -50,7 +49,7 @@ namespace AG_Mobile.Activities
 
             if(!password.Equals(passwordC))
             {
-                Toast.MakeText(this, "Passwords do not match!", ToastLength.Long);
+                RunOnUiThread(() => { Toast.MakeText(this, "Passwords do not match!", ToastLength.Long); });
                 FindViewById<AutoCompleteTextView>(Resource.Id.txtPassword).Text = string.Empty;
                 FindViewById<AutoCompleteTextView>(Resource.Id.txtPasswordC).Text = string.Empty;
                 return;
