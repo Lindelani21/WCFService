@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -144,8 +145,8 @@ namespace AG_Mobile.Utilities
             request.ContentType = "application/json";
 
             string jsonObj = JsonConvert.SerializeObject(data);
-            const string regex = ",?\"([a-zA-Z]+)?[iI][dD]\"\\s?:\\s?0,?\r\n";
-            jsonObj = Regex.Replace(jsonObj, regex, string.Empty);
+            //const string regex = ",?\"([a-zA-Z]+)?[iI][dD]\"\\s?:\\s?0,?\r\n";
+            //jsonObj = Regex.Replace(jsonObj, regex, string.Empty);
 
             byte[] bytes = Encoding.UTF8.GetBytes(jsonObj);
 
@@ -176,6 +177,27 @@ namespace AG_Mobile.Utilities
             }
 
             return false;
+        }
+
+        public async Task<bool> Post_Async<T>(string directive, T obj)
+        {
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            httpClientHandler.ServerCertificateCustomValidationCallback += delegate { return true; };
+
+            HttpClient httpClient = new HttpClient(httpClientHandler);
+
+            HttpResponseMessage httpResponse = await httpClient.PostAsJsonAsync($"{baseURL}{directive}", obj);
+
+            try
+            {
+                httpResponse.EnsureSuccessStatusCode();
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
