@@ -40,15 +40,18 @@ namespace AssistantGenesis_Web_App
             
             ICryptoTransform encryptor = aes.CreateEncryptor();
 
-            MemoryStream mStream = new MemoryStream();
-            CryptoStream cStream = new CryptoStream(mStream, encryptor, CryptoStreamMode.Write);
-            StreamWriter writer = new StreamWriter(cStream);
+            using (MemoryStream mStream = new MemoryStream())
+            using (CryptoStream cStream = new CryptoStream(mStream, encryptor, CryptoStreamMode.Write))
+            using (StreamWriter writer = new StreamWriter(cStream))
+            {
+                writer.Write(text);
 
-            writer.Write(text);
+                cStream.FlushFinalBlock();
 
-            bytes = mStream.ToArray();
+                bytes = mStream.ToArray();
+            }
 
-            encoded = Encoding.Default.GetString(bytes);
+            encoded = Encoding.UTF8.GetString(bytes);
 
             return encoded;
         }
@@ -56,7 +59,7 @@ namespace AssistantGenesis_Web_App
         public static string? DecodeAES(string text)
         {
             string decoded = string.Empty;
-            byte[] bytes;
+            byte[] bytes = Encoding.UTF8.GetBytes(text);
 
             Aes aes = Aes.Create();
 
@@ -68,17 +71,14 @@ namespace AssistantGenesis_Web_App
             aes.Key = Key;
             aes.IV = IV;
 
-            ICryptoTransform encryptor = aes.CreateEncryptor();
+            ICryptoTransform decryptor = aes.CreateDecryptor();
 
-            MemoryStream mStream = new MemoryStream();
-            CryptoStream cStream = new CryptoStream(mStream, encryptor, CryptoStreamMode.Write);
-            StreamReader reader = new StreamReader(cStream);
-
-            reader.Read();
-
-            bytes = mStream.ToArray();
-
-            decoded = Encoding.Default.GetString(bytes);
+            using (MemoryStream mStream = new MemoryStream(bytes))
+            using (CryptoStream cStream = new CryptoStream(mStream, decryptor, CryptoStreamMode.Read))
+            using (StreamReader reader = new StreamReader(cStream))
+            {
+                decoded = reader.ReadToEnd();
+            }
 
             return decoded;
         }
