@@ -186,16 +186,25 @@ namespace AG_Mobile.Utilities
 
             HttpClient httpClient = new HttpClient(httpClientHandler);
 
-            HttpResponseMessage httpResponse = await httpClient.PostAsJsonAsync($"{baseURL}{directive}", obj);
+            string jsonObj = JsonConvert.SerializeObject(obj);
+            const string regex = ",?\"([a-zA-Z]+)?[iI][dD]\"\\s*:\\s*0,?";
+            jsonObj = Regex.Replace(jsonObj, regex, string.Empty);
 
-            try
-            {
-                httpResponse.EnsureSuccessStatusCode();
-            }
-            catch (Exception ex)
-            {
+            StringContent content = new StringContent(jsonObj, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage httpResponse = await httpClient.PostAsync($"{baseURL}{directive}", content);
+
+            //try
+            //{
+            //    httpResponse.EnsureSuccessStatusCode();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return false;
+            //}
+
+            if (httpResponse.StatusCode != HttpStatusCode.Created)
                 return false;
-            }
 
             return true;
         }

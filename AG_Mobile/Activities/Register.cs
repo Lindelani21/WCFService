@@ -58,7 +58,8 @@ namespace AG_Mobile.Activities
                 Surname = surname,
                 StudentNum = studentNo,
                 Username = username,
-                Password = Secrecy.HashPassword(password)
+                Password = Secrecy.HashPassword(password),
+                Role = "student"
             };
 
             if(await RESTfulClient.Instance.Post_Async("Users", user))

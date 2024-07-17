@@ -41,6 +41,7 @@ namespace AG_Mobile.Activities
             btnSubmit = FindViewById<Button>(Resource.Id.btnSubmit);
             lvUploadedDocs = FindViewById<ListView>(Resource.Id.lvUploadedDocs);
 
+            btnSubmit.Click += delegate { OnSubmitBtnClicked(); } ;
 
             string jsonObj = GetSharedPreferences("User", FileCreationMode.Private).GetString("User", null);
             user = JsonConvert.DeserializeObject<User>(jsonObj);
