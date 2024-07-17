@@ -50,7 +50,10 @@ namespace AssistantGenesis_Web_App.Controllers
 
             TempData["msg"] = "You were succesfuly logged in";
             TempData["success"] = true;
-            HttpContext.Session.Set("User",user);
+
+            string sessionID = Secrecy.EncodeAES(user.Username);
+
+            this.SetSession<User>(sessionID, user);
 
             return View();
         }

@@ -9,7 +9,7 @@ namespace AssistantGenesis_Web_App.Controllers
 
         public IActionResult Index()
         {
-            User? user = HttpContext.Session.IsAvailable?HttpContext.Session.Get<User>("User"):null;
+            User? user = HttpContext.Session.IsAvailable?this.GetSession<User>():null;
 
             if (user == null)
             {
