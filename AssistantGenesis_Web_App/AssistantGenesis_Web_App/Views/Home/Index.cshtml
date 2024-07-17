@@ -1,36 +1,26 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
 <div class="container">
-    @* <!-- Sidebar with navigation links -->
-    <div class="sidebar">
-        <h2>Navigation</h2>
-        <a href="#">Home</a>
-        <a href="#">Notifications</a>
-        <a href="#">Applications</a>
-        <a href="#">User Management</a>
-        <a href="#">Modules</a>
-    </div> *@
     <!-- Main content area -->
     <div class="content">
-        <div class="header">
+        <div class="text-center bg-notice-me p-3 text-white">
             <!-- Header section -->
             <h1>Welcome to Assistant Genesis</h1>
             <span id="user"></span>
         </div>
-        <div class="card">
-            <h2>Overview</h2>
+        <div class="card" style="background-color:#ffffff;margin-bottom:20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding:20px">
+            <h2 style="margin-top:0; color:#ff6600 ">Overview</h2>
             <p>Welcome to the Assistant Genesis portal. Here, lecturers and administrators can manage assistant assignments, applications, and more. Use the navigation links to access different sections of the site.</p>
         </div>
         <!-- Recent Notifications card -->
-        <div class="card">
-            <h2>Recent Notifications</h2>
+        <div class ="card" style="background-color:#ffffff;margin-bottom:20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding:20px">
+            <h2 style="color:#ff6600">Recent Notifications</h2>
             <p>No new notifications.</p>
         </div>
         <!-- Recent Applications card -->
-        <div class="card">
-            <h2>Recent Applications</h2>
+        <div class="card" style="background-color:#ffffff;margin-bottom:20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding:20px">
+            <h2 style="color:#ff6600">Recent Applications</h2>
             <p>No new applications.</p>
         </div>
     </div>
